@@ -2,16 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Archetype;
-use App\Enums\AwardKey;
+use App\Analysis\Analyzer;
 use App\Enums\Choice;
 use App\Enums\SessionStatus;
-use App\Models\Award;
 use App\Models\Decision;
 use App\Models\GameSession;
 use App\Models\Pairing;
 use App\Models\Player;
-use App\Models\PlayerStat;
 use App\Models\Round;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +18,9 @@ use Illuminate\Support\Facades\DB;
  * stats and awards filled in, and the analysis beat sequence populated, so the
  * front-end sessions have real-shaped data to render before the engine exists.
  *
- * The stats here are illustrative placeholders in the contract's shape. Session 5
- * replaces the numbers with real computation; the shape stays.
+ * The decision log is scripted (Jordan a saint, Priya a wall, Sam a backstabber, Alex a
+ * mirror, Morgan an opportunist, Casey random-ish); everything after it is computed by the
+ * real analyzer, so the demo shows exactly what a game would.
  */
 class DemoSessionSeeder extends Seeder
 {
@@ -106,137 +104,8 @@ class DemoSessionSeeder extends Seeder
                 }
             }
 
-            // Stats and archetypes in the contract shape. Numbers are hand-picked to match the scripts.
-            $archetypes = [
-                'Jordan' => Archetype::Saint,
-                'Priya' => Archetype::Wall,
-                'Sam' => Archetype::Backstabber,
-                'Alex' => Archetype::Mirror,
-                'Morgan' => Archetype::Opportunist,
-                'Casey' => Archetype::Wildcard,
-            ];
-
-            $ranked = $players->map(fn ($p) => $p->fresh())->sortByDesc('total_points')->values();
-            foreach ($ranked as $rank => $player) {
-                $shares = collect($scripts[$player->username])->filter(fn ($c) => $c === 'share')->count() * 2;
-                PlayerStat::factory()->create([
-                    'game_session_id' => $session->id,
-                    'player_id' => $player->id,
-                    'total_points' => $player->total_points,
-                    'rank' => $rank + 1,
-                    'decisions_count' => 20,
-                    'timeouts' => $player->username === 'Casey' ? 1 : 0,
-                    'share_rate' => round($shares / 20, 4),
-                    'archetype' => $archetypes[$player->username],
-                ]);
-            }
-
-            $byName = fn (string $name) => $players->firstWhere('username', $name)->id;
-            $awards = [
-                [AwardKey::Kindest, 'Jordan', 1.0],
-                [AwardKey::MostForgiving, 'Alex', 0.67],
-                [AwardKey::MostRuthless, 'Priya', 0.0],
-                [AwardKey::BestPartner, 'Jordan', 3.4],
-                [AwardKey::MostBetrayed, 'Jordan', 11],
-                [AwardKey::ColdBlooded, 'Morgan', 4],
-                [AwardKey::EndgameAssassin, 'Sam', -0.75],
-                [AwardKey::Unreadable, 'Casey', 0.41],
-                [AwardKey::FastestThumb, 'Alex', 812],
-            ];
-            foreach ($awards as [$key, $name, $value]) {
-                Award::factory()->create([
-                    'game_session_id' => $session->id,
-                    'player_id' => $byName($name),
-                    'key' => $key,
-                    'value' => $value,
-                ]);
-            }
-            foreach ($ranked->take(3) as $place => $player) {
-                Award::factory()->create([
-                    'game_session_id' => $session->id,
-                    'player_id' => $player->id,
-                    'key' => AwardKey::Champion,
-                    'place' => $place + 1,
-                    'value' => $player->total_points,
-                    'tie_break' => null,
-                ]);
-            }
-
-            $session->update(['analysis_beats' => $this->beats($session->fresh())]);
+            // The real analysis: stats, archetypes, awards and the beat sequence from the log above.
+            app(Analyzer::class)->analyze($session->fresh());
         });
-    }
-
-    /**
-     * The beat sequence in the CONTRACT.md § Analysis shape. Session 5 generates this for real.
-     *
-     * @return array<int, array<string, mixed>>
-     */
-    private function beats(GameSession $session): array
-    {
-        $stats = $session->stats()->with('player')->orderBy('rank')->get();
-        $awards = $session->awards()->with('player')->get();
-
-        $beats = [
-            ['type' => 'room_share_rate', 'screen' => [
-                'share_rate' => round($stats->avg('share_rate'), 4),
-                'total_points' => $stats->sum('total_points'),
-                'max_cooperative_points' => $stats->count() * $session->rounds_count * $session->decisions_per_round * 3,
-            ]],
-            ['type' => 'share_rate_by_decision', 'screen' => [
-                'series' => collect(range(1, 10))->map(fn ($i) => ['decision' => $i, 'share_rate' => round(0.72 - ($i >= 9 ? 0.3 : 0) - $i * 0.01, 4)])->all(),
-            ]],
-        ];
-
-        foreach ($stats as $stat) {
-            $beats[] = [
-                'type' => 'archetype_reveal',
-                'screen' => $stat->toContractArray(),
-                'private' => [$stat->player_id => $stat->toContractArray()],
-            ];
-        }
-
-        $beats[] = ['type' => 'archetype_census', 'screen' => [
-            'counts' => $stats->groupBy(fn ($s) => $s->archetype->value)
-                ->map(fn ($group, $key) => ['archetype' => Archetype::from($key)->toArray(), 'count' => $group->count()])
-                ->values()->all(),
-        ]];
-
-        $beats[] = ['type' => 'stat_leaders', 'screen' => [
-            'leaders' => [
-                ['stat' => 'share_rate', 'label' => 'Share rate', 'player' => $stats->sortByDesc('share_rate')->first()->player->toPublicArray(), 'value' => $stats->max('share_rate'), 'value_label' => round($stats->max('share_rate') * 100).'%'],
-                ['stat' => 'betrayals', 'label' => 'Betrayals', 'player' => $stats->sortByDesc('betrayals')->first()->player->toPublicArray(), 'value' => $stats->max('betrayals'), 'value_label' => (string) $stats->max('betrayals')],
-            ],
-        ]];
-
-        foreach (AwardKey::cases() as $key) {
-            if ($key === AwardKey::Champion) {
-                continue;
-            }
-            $award = $awards->first(fn ($a) => $a->key === $key);
-            if (! $award) {
-                continue;
-            }
-            $payload = [
-                'award' => $key->toArray() + [
-                    'winner' => $award->player->toPublicArray(),
-                    'value' => $award->value,
-                    'value_label' => (string) $award->value,
-                    'tie_break' => $award->tie_break,
-                ],
-            ];
-            $beats[] = ['type' => 'award', 'screen' => $payload, 'private' => [$award->player_id => $payload]];
-        }
-
-        $podium = $awards->where('key', AwardKey::Champion)->sortBy('place')->values();
-        $beats[] = ['type' => 'podium', 'screen' => [
-            'places' => $podium->map(fn ($a) => [
-                'place' => $a->place,
-                'player' => $a->player->toPublicArray(),
-                'total_points' => (int) $a->value,
-                'archetype' => $stats->firstWhere('player_id', $a->player_id)?->archetype?->toArray(),
-            ])->all(),
-        ]];
-
-        return $beats;
     }
 }

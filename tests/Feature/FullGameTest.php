@@ -163,18 +163,22 @@ it('plays a full five-round fast-mode game to the podium on the server clock alo
 
     // Analysis: beat 0 on screen, then Next walks the beats and sends cards, then the end.
     $state = $session->refresh()->toStateArray();
-    expect($state['status'])->toBe('analysis')->and($state['analysis_beat'])->toBe(0)->and($state['analysis_beat_count'])->toBe(2)->and($state['phase_ends_at'])->toBeNull();
-    expect(payloadsOf(AnalysisStarted::class)->sole()['beat_count'])->toBe(2);
+    $beatCount = count($session->analysis_beats);
+    expect($state['status'])->toBe('analysis')->and($state['analysis_beat'])->toBe(0)->and($state['analysis_beat_count'])->toBe($beatCount)->and($state['phase_ends_at'])->toBeNull();
+    expect(payloadsOf(AnalysisStarted::class)->sole()['beat_count'])->toBe($beatCount);
     $beat = payloadsOf(AnalysisBeat::class)->sole();
-    expect($beat)->toMatchArray(['index' => 0, 'count' => 2, 'type' => 'room_share_rate'])
+    expect($beat)->toMatchArray(['index' => 0, 'count' => $beatCount, 'type' => 'room_share_rate'])
         ->and($beat['payload'])->toHaveKeys(['share_rate', 'total_points', 'max_cooperative_points']);
-    expect($session->stats()->count())->toBe(5)->and($session->awards()->count())->toBe(3);
+    expect($session->stats()->count())->toBe(6)->and($session->awards()->where('key', 'champion')->count())->toBe(3); // five humans and The Machine
 
-    asDirector()->postJson('/api/director/sessions/GAME/next')->assertOk()->assertJsonPath('state.analysis_beat', 1);
+    // Next walks every beat, sending cards as it goes, and the last Next ends the game.
+    for ($i = 1; $i < $beatCount; $i++) {
+        asDirector()->postJson('/api/director/sessions/GAME/next')->assertOk()->assertJsonPath('state.analysis_beat', $i);
+    }
     expect(payloadsOf(AnalysisBeat::class)->last()['type'])->toBe('podium');
-    Event::assertDispatchedTimes(YouCard::class, 5);
-    $card = payloadsOf(YouCard::class)->first();
-    expect($card)->toMatchArray(['index' => 1, 'type' => 'podium'])->and($card['payload'])->toHaveKeys(['rank', 'total_points', 'archetype', 'awards']);
+    Event::assertDispatched(YouCard::class, fn ($e) => $e->broadcastWith()['type'] === 'podium' && array_key_exists('awards', $e->broadcastWith()['payload']));
+    Event::assertDispatched(YouCard::class, fn ($e) => $e->broadcastWith()['type'] === 'archetype_reveal' && $e->broadcastWith()['payload']['archetype'] !== null);
+    expect(payloadsOf(YouCard::class)->where('type', 'podium'))->toHaveCount(5);
 
     asDirector()->postJson('/api/director/sessions/GAME/next')->assertOk()->assertJsonPath('state.status', 'finished');
     expect(payloadsOf(SessionEnded::class)->sole()['reason'])->toBe('completed');
@@ -199,6 +203,7 @@ it('keeps every name off the public channel in an anonymous game', function () {
 
     $podium = collect($session->refresh()->analysis_beats)->firstWhere('type', 'podium');
     expect($podium['screen'])->toHaveKeys(['distribution', 'top_scores'])->and($podium['private'])->toHaveCount(4);
+    expect(json_encode(collect($session->analysis_beats)->pluck('screen')))->not->toContain('Player1');
 });
 
 it('never advances a phase early', function () {
