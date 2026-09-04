@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Analysis\Analyzer;
+use App\Analysis\StubAnalyzer;
 use App\Auth\IdentityResolver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -13,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        // Session 5 swaps the stub for the real analysis here.
+        $this->app->bind(Analyzer::class, StubAnalyzer::class);
     }
 
     public function boot(): void

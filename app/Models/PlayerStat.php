@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Archetype;
+use App\Models\Concerns\HasPreciseTimestamps;
 use Database\Factories\PlayerStatFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ class PlayerStat extends Model
 {
     /** @use HasFactory<PlayerStatFactory> */
     use HasFactory;
+
+    use HasPreciseTimestamps;
 
     protected $guarded = [];
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\SessionMode;
 use App\Enums\SessionStatus;
+use App\Models\Concerns\HasPreciseTimestamps;
 use Database\Factories\GameSessionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,8 @@ class GameSession extends Model
 {
     /** @use HasFactory<GameSessionFactory> */
     use HasFactory;
+
+    use HasPreciseTimestamps;
 
     protected $guarded = [];
 
@@ -57,6 +60,18 @@ class GameSession extends Model
         return $this->hasMany(Award::class);
     }
 
+    /** Humans who are in the game: admitted and not kicked. The Machine is not one. */
+    public function participants(): HasMany
+    {
+        return $this->players()->where('is_bot', false)->where('is_admitted', true)->whereNull('kicked_at');
+    }
+
+    /** `state.player_count`: non-bot, non-kicked players. */
+    public function playerCount(): int
+    {
+        return $this->players()->where('is_bot', false)->whereNull('kicked_at')->count();
+    }
+
     public function isPaused(): bool
     {
         return $this->paused_at !== null;
@@ -96,7 +111,21 @@ class GameSession extends Model
             'analysis_beat' => $this->analysis_beat,
             'analysis_beat_count' => is_array($beats) ? count($beats) : null,
             'phase_ends_at' => self::iso($this->phase_ends_at),
-            'player_count' => $this->players()->where('is_bot', false)->whereNull('kicked_at')->count(),
+            'player_count' => $this->playerCount(),
+        ];
+    }
+
+    /**
+     * SessionSummary for the director's history list: State plus the three lifecycle stamps.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSummaryArray(): array
+    {
+        return $this->toStateArray() + [
+            'created_at' => self::iso($this->created_at),
+            'started_at' => self::iso($this->started_at),
+            'ended_at' => self::iso($this->ended_at),
         ];
     }
 

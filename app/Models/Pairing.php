@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasPreciseTimestamps;
 use Database\Factories\PairingFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ class Pairing extends Model
 {
     /** @use HasFactory<PairingFactory> */
     use HasFactory;
+
+    use HasPreciseTimestamps;
 
     protected $guarded = [];
 

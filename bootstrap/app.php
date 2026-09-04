@@ -1,5 +1,6 @@
 <?php
 
+use App\Game\GameException;
 use App\Http\Middleware\EnsureDirector;
 use App\Http\Middleware\EnsurePlayer;
 use Illuminate\Foundation\Application;
@@ -25,5 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // A game rule said no: 409 { message, reason } (see CONTRACT.md § 10).
+        $exceptions->render(fn (GameException $e) => response()->json([
+            'message' => $e->getMessage(),
+            'reason' => $e->reason,
+        ], $e->status));
     })->create();

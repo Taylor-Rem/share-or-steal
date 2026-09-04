@@ -438,7 +438,10 @@ Anonymous: `rank` is still sent (it's private), `partner` is the codename.
 ## 10. Endpoints
 
 All under `/api`, JSON in and out. Validation errors are Laravel's standard `422`
-`{ message, errors }`. Unknown code is `404`. Wrong or missing identity is `401`.
+`{ message, errors }`. Unknown code is `404`. Wrong or missing identity is `401`. A game
+rule saying no is `409` `{ message, reason }`, where `reason` is the token named next to
+the endpoint below (`not_enough_players`, `session_full`, …); `POST choice` has its own
+`409` shape.
 
 ### 10.1 Public (no identity required)
 
@@ -468,7 +471,7 @@ Broadcasts `player.joined`.
 render the current moment without waiting for the next event.
 ```json
 {
-  "server_time": "…", "state": State, "player": PublicPlayer, "is_admitted": true,
+  "server_time": "…", "state": State, "player": PublicPlayer, "is_admitted": true, "kicked": false,
   "total_points": 41,
   "round": { "number": 3, "anonymous": false, "partner": Partner, "seat": "a", "round_total": { "you": 12, "partner": 9 } } ,
   "decision": { "index": 7, "opened_at": "…", "deadline_at": "…", "your_choice": "share", "chosen": true },
@@ -720,3 +723,16 @@ Places where the plan was silent or ambiguous, and the call that was made:
 Append a dated line here whenever the contract changes, with the session that made it.
 
 - 2026-09-04 · Session 0 · Initial contract.
+- 2026-09-04 · Session 1 · `GET me` gains `kicked: boolean` so a reloaded phone can tell it
+  was removed (its channels 403 either way). `409` error shape pinned as `{ message, reason }`.
+  `me` and `choice` accept any player record of the session (route middleware `player:any`),
+  so a late joiner can poll and a kicked phone gets `not_admitted` rather than a `401`.
+  Moment rules and thresholds: `betrayal` and `mutual_steal` every time they happen;
+  `mutual_share_streak` when a pair's streak reaches `game.moments.share_streak_at` (3) and
+  again on a perfect round; `comeback` when a seat trailing its partner by at least
+  `game.moments.comeback_deficit` (5) draws level or ahead. `you.nudged` is sent on every
+  reveal while a player's `consecutive_timeouts >= nudge_after_timeouts`; `director.warning`
+  fires alongside it. `aggregate` counts The Machine's seat like any other. A join with a
+  known device token returns `200` without re-broadcasting `player.joined`; a late joiner's
+  `player.joined` is broadcast at `admit`, not at join. Timestamps are stored with
+  microseconds and a UTC offset (`App\Models\Concerns\HasPreciseTimestamps`).
