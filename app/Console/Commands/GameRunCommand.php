@@ -2,15 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Game\Engine;
 use Illuminate\Console\Command;
+use Throwable;
 
 /**
- * The game clock. Session 1 (Engine) fills this in: on every tick it loads
- * every session whose status is timed and whose phase_ends_at has passed, and
- * advances it (open decision -> score -> reveal -> next), broadcasting as it goes.
- *
- * Session 0 ships only the loop shape so the Laravel Cloud background process
- * definition (`php artisan game:run`) is valid from day one.
+ * The game clock. Every tick it asks the engine to advance every session whose timed
+ * phase has ended (open decision -> score -> reveal -> next -> summary -> next round ->
+ * analysis), broadcasting as it goes. One process per deployment; Laravel Cloud runs it
+ * as a background process.
  */
 class GameRunCommand extends Command
 {
@@ -18,21 +18,35 @@ class GameRunCommand extends Command
 
     protected $description = 'Advance every active session on a fixed tick. Long-running; one process per deployment.';
 
-    public function handle(): int
+    public function handle(Engine $engine): int
     {
         $tickMs = (int) config('game.tick_ms', 250);
-        $this->info("game:run started, tick {$tickMs} ms. (Session 0 stub: ticks, advances nothing.)");
+        $this->info("game:run started, tick {$tickMs} ms.");
 
         do {
-            $this->tick();
+            $this->tick($engine);
             usleep($tickMs * 1000);
         } while (! $this->option('once'));
 
         return self::SUCCESS;
     }
 
-    protected function tick(): void
+    protected function tick(Engine $engine): void
     {
-        // Session 1: advance every GameSession whose status->isTimed() and phase_ends_at <= now().
+        try {
+            foreach ($engine->tick() as $session) {
+                $this->line(sprintf(
+                    '%s  %s -> %s%s',
+                    now()->format('H:i:s.v'),
+                    $session->code,
+                    $session->status->value,
+                    $session->current_round ? sprintf(' (round %d%s)', $session->current_round, $session->current_decision ? ', decision '.$session->current_decision : '') : '',
+                ));
+            }
+        } catch (Throwable $e) {
+            // One bad session must not stop the clock for the others.
+            report($e);
+            $this->error(now()->format('H:i:s.v').'  tick failed: '.$e->getMessage());
+        }
     }
 }

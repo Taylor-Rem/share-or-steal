@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Choice;
+use App\Models\Concerns\HasPreciseTimestamps;
 use Database\Factories\DecisionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ class Decision extends Model
 {
     /** @use HasFactory<DecisionFactory> */
     use HasFactory;
+
+    use HasPreciseTimestamps;
 
     protected $guarded = [];
 

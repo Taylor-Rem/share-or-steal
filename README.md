@@ -79,6 +79,26 @@ deployed environment:
 node scripts/listen.mjs DEMO --director=$DIRECTOR_PASSWORD
 ```
 
+### Playing a game from the terminal
+
+With `composer dev` running, thirty scripted phones and a director can play a whole
+fast-mode game over the real API and real WebSockets (Node 22+):
+
+```bash
+node scripts/play.mjs --director=$DIRECTOR_PASSWORD
+```
+
+It creates a session, joins the players, starts, answers (or sleeps, double-taps, or
+straggles) every decision, kicks one player, admits a late joiner, pauses once, walks the
+analysis beats and prints the podium, then lists every contract event it saw per channel
+and exits non-zero if one is missing. Useful flags: `--players=9`, `--anonymous`,
+`--rounds=2 --decisions=3`, `--slow` (game-day clocks), `--code=ABCD` to join an existing
+lobby, and `--url=`/`--ws=` for a deployed environment.
+
+By hand, the same thing is: `POST /api/director/sessions` with `X-Director-Key`, a few
+`POST /api/sessions/{code}/join`, then `POST .../start`; `php artisan game:run` does the
+rest and prints each transition. See `CONTRACT.md` § 10 for every endpoint.
+
 Phones on the same Wi-Fi can open the page too if you point `APP_URL`, `REVERB_HOST` and the Vite dev server at your
 machine's LAN address.
 
@@ -99,8 +119,11 @@ runs Pint, Pest and `npm run build` on every push and pull request.
 ```
 app/Auth/            header-based identity (players, director, screen) — CONTRACT.md § 2
 app/Enums/           SessionStatus, SessionMode, Choice, Archetype, AwardKey
-app/Events/          GameBroadcast base (envelope + state) and GamePing
-app/Console/         game:ping, game:run (stub until Session 1)
+app/Events/          GameBroadcast base (envelope + state) and one class per CONTRACT.md § 9 event
+app/Game/            the engine: Engine (state machine, commands, broadcasts), Pairer, Moments, Payloads
+app/Analysis/        Analyzer contract and the StubAnalyzer that Session 5 replaces
+app/Http/            join / me / choice and the director endpoints — CONTRACT.md § 10
+app/Console/         game:ping, game:run (the clock: one tick every game.tick_ms)
 app/Models/          GameSession, Player, Round, Pairing, Decision, PlayerStat, Award
 config/game.php      every tunable: clocks, payoffs, thresholds, codenames
 database/            migrations, factories, DemoSessionSeeder (code DEMO)
