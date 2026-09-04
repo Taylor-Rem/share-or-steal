@@ -42,6 +42,10 @@ export const useGameStore = defineStore('game', {
         publicSummary: null, // round.summary
         beat: null, // analysis.beat
 
+        // --- the director (CONTRACT.md § 9.4 and GET director/sessions/{code}) ---
+        directorPlayers: {}, // id -> DirectorPlayer, from the detail endpoint and director.player_updated
+        warnings: [], // director.warning, newest first
+
         events: [], // newest first, capped
         channels: [], // channel names we are subscribed to
         lastError: null,
@@ -323,9 +327,22 @@ export const useGameStore = defineStore('game', {
                 case 'session.ended':
                     this.ended = payload.reason;
                     break;
+                case 'director.player_updated': {
+                    const { player, ...fields } = payload;
+                    this.directorPlayers = { ...this.directorPlayers, [player.id]: { ...(this.directorPlayers[player.id] ?? {}), ...player, ...fields } };
+                    break;
+                }
+                case 'director.warning':
+                    this.warnings = [{ at: payload.server_time, message: payload.message }, ...this.warnings].slice(0, 20);
+                    break;
                 default:
                     break;
             }
+        },
+
+        /** DirectorPlayer rows from GET /director/sessions/{code}. */
+        setDirectorPlayers(list) {
+            this.directorPlayers = Object.fromEntries(list.map((p) => [p.id, p]));
         },
 
         async fetchState() {

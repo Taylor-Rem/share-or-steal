@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useGameStore } from '../../shared/stores/game';
-import { useCountdown } from '../composables/useCountdown';
+import { useCountdown } from '../../shared/useCountdown';
 import PartnerName from './PartnerName.vue';
 import Track from './Track.vue';
 

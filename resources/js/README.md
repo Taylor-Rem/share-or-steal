@@ -17,4 +17,8 @@ scripted game in the contract's shapes; `?fixture=1` on `/play/{code}` plays it 
 server (`?fixture=fast` for fast clocks). `shared/audio.js` exposes `useAudio()` with the
 named cues Session 6 implements; `shared/haptics.js` wraps `navigator.vibrate`.
 
-The screen and director pages are still Session 0 placeholders showing raw state.
+The director (`director/`) is real too: `useDirector.js` keeps the key and wraps the § 10.3
+endpoints, `logic.js` holds the pure rules (which button, how to name a beat), and the
+three pages are the gate + create/history, the control panel, and the analysis tables.
+
+The screen page is still a Session 0 placeholder showing raw state.

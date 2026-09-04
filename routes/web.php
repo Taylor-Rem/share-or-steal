@@ -14,3 +14,4 @@ Route::view('/screen/{code}', 'app', ['app' => 'screen'])->name('screen');
 
 Route::view('/director', 'app', ['app' => 'director'])->name('director.home');
 Route::view('/director/{code}', 'app', ['app' => 'director'])->name('director.session');
+Route::view('/director/{code}/analysis', 'app', ['app' => 'director'])->name('director.analysis');
