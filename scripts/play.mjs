@@ -7,6 +7,7 @@
  *   node scripts/play.mjs --director=KEY                          # 30 players, fast mode, new session
  *   node scripts/play.mjs --director=KEY --players=9 --anonymous --rounds=2 --decisions=3
  *   node scripts/play.mjs --director=KEY --code=ABCD              # join an existing lobby instead
+ *   node scripts/play.mjs --director=KEY --code=ABCD --follow     # phones only: you are the director
  *   node scripts/play.mjs --director=KEY --url=https://x.laravel.cloud --ws=wss://ws-host:443
  *
  * Needs `php artisan game:run` and Reverb running (`composer dev` starts both) and Node 22+.
@@ -115,12 +116,16 @@ let paused = false;
 let finished = false;
 let lastEvent = Date.now();
 
+const follow = Boolean(args.follow); // no director commands: a human runs the panel
+
 const directorOn = async (event, payload) => {
     lastEvent = Date.now();
     const s = payload.state;
     const where = s.round ? ` r${s.round}${s.decision ? ` d${s.decision}` : ''}` : '';
     if (!['director.player_updated'].includes(event)) log(`${event.padEnd(24)} ${s.status.padEnd(13)}${where.padEnd(8)}`, summarize(event, payload));
 
+    if (event === 'session.ended') finish(payload.reason);
+    if (follow) return;
     if (event === 'game.started') {
         await dir('POST', `/sessions/${code}/screen/reload`);
         late = await spawnPlayer(playerCount + 1, 'Late', true);
@@ -144,7 +149,6 @@ const directorOn = async (event, payload) => {
         await sleep(300);
         await dir('POST', `/sessions/${code}/next`);
     }
-    if (event === 'session.ended') finish(payload.reason);
 };
 
 function summarize(event, p) {
@@ -204,7 +208,9 @@ async function spawnPlayer(i, name, lateJoiner = false) {
 for (let i = 1; i <= playerCount; i++) await spawnPlayer(i, `Sim${String(i).padStart(2, '0')}`);
 log(`${players.length} phones joined and connected`);
 
-{
+if (follow) {
+    log('following: start the game from the director panel');
+} else {
     const { status, json } = await dir('POST', `/sessions/${code}/start`);
     if (status !== 200) { console.error('start failed', status, json); process.exit(1); }
 }
@@ -213,7 +219,7 @@ log(`${players.length} phones joined and connected`);
 // The end
 // ---------------------------------------------------------------------------------------------
 
-const watchdog = setInterval(() => { if (Date.now() - lastEvent > 60_000) { console.error('no events for 60 s, giving up'); finish('timeout'); } }, 5_000);
+const watchdog = setInterval(() => { if (Date.now() - lastEvent > (follow ? 600_000 : 60_000)) { console.error('no events for 60 s, giving up'); finish('timeout'); } }, 5_000);
 
 async function finish(reason) {
     if (finished) return;
@@ -230,7 +236,9 @@ async function finish(reason) {
     }
     const unexpected = Object.entries(seen).flatMap(([kind, names]) => Object.keys(names).filter((n) => !EXPECTED[kind].includes(n) && n !== 'game.ping').map((n) => `${kind}:${n}`));
     if (unexpected.length) console.log('unexpected:', unexpected.join(' '));
-    console.log(missing === 0 && reason === 'completed' ? '\nOK: every contract event observed on the wire.' : `\nFAIL: ${missing} event(s) never seen, ended by ${reason}.`);
+    // In follow mode the human director decides what happens, so only the ending counts.
+    const ok = reason === 'completed' && (follow || missing === 0);
+    console.log(ok ? `\nOK: ${follow ? 'game completed' : 'every contract event observed on the wire'}.` : `\nFAIL: ${missing} event(s) never seen, ended by ${reason}.`);
     for (const ws of sockets) ws.close(1000);
-    process.exit(missing === 0 && reason === 'completed' ? 0 : 1);
+    process.exit(ok ? 0 : 1);
 }

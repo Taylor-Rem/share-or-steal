@@ -1,7 +1,7 @@
 <script setup>
 import { computed, watch } from 'vue';
 import { useGameStore } from '../../shared/stores/game';
-import { useCountdown } from '../composables/useCountdown';
+import { useCountdown } from '../../shared/useCountdown';
 import { useAudio } from '../../shared/audio';
 import { vibrate, BUZZ } from '../../shared/haptics';
 import PartnerName from './PartnerName.vue';

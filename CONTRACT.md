@@ -71,6 +71,7 @@ neither is present). A room shares one public IP, so never limit per IP alone.
 | `/screen/{code}` | screen | Projector. No controls. |
 | `/director` | director | Password, create session, session history. |
 | `/director/{code}` | director | Control panel for one session. |
+| `/director/{code}/analysis` | director | The computed stats, awards and beats of one session, as tables. |
 
 All five return the same Blade shell (`resources/views/app.blade.php`) with the right
 Vite entry; Vue Router owns everything after that. The three apps share
