@@ -71,8 +71,15 @@ And prove a broadcast reaches all three:
 php artisan game:ping DEMO
 ```
 
-Each page should show a `game.ping` event within a moment. Phones on the same Wi-Fi can
-open the page too if you point `APP_URL`, `REVERB_HOST` and the Vite dev server at your
+Each page should show a `game.ping` event within a moment. There is also a headless client
+for the same check from a terminal (Node 22+), which is the tool for smoke-testing a
+deployed environment:
+
+```bash
+node scripts/listen.mjs DEMO --director=$DIRECTOR_PASSWORD
+```
+
+Phones on the same Wi-Fi can open the page too if you point `APP_URL`, `REVERB_HOST` and the Vite dev server at your
 machine's LAN address.
 
 ### Tests and style
