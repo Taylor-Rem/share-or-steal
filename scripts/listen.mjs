@@ -30,7 +30,8 @@ if (args.device) { headers['X-Device-Token'] = args.device; headers['X-Session-C
 const channels = [`private-session.${code}`, `private-screen.${code}`];
 if (args.director) channels.push(`private-director.${code}`);
 
-const ws = new WebSocket(`${wsBase}/app/${key}?protocol=7&client=js&version=8.6.0`);
+// Reverb on Laravel Cloud only accepts the app's own origin, so send it (Node's WebSocket sends none by default).
+const ws = new WebSocket(`${wsBase}/app/${key}?protocol=7&client=js&version=8.6.0`, { headers: { Origin: appUrl } });
 const t0 = Date.now();
 const log = (...a) => console.log(`[+${String(Date.now() - t0).padStart(5)}ms]`, ...a);
 
