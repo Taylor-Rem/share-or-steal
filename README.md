@@ -113,7 +113,8 @@ tests/               Pest: schema + seed, state endpoint, channel auth, game:pin
 
 ## Laravel Cloud
 
-Nothing in the repo is Cloud-specific; the dashboard holds the configuration.
+Nothing in the repo is Cloud-specific; the dashboard holds the configuration. Production is
+`https://share-or-steal-production-lh9czz.laravel.cloud`, deployed from `main` on every push.
 
 **Environment**
 
@@ -121,11 +122,13 @@ Nothing in the repo is Cloud-specific; the dashboard holds the configuration.
   cold start; leave it on otherwise.
 - Database: serverless Postgres, attached to the environment (Cloud injects `DB_*`).
 - Reverb: add a Reverb cluster (100-connection tier is plenty for 30 phones + screen +
-  director). Cloud injects `REVERB_*`; make sure the `VITE_REVERB_*` variables are set
-  from them (see `.env.example`) so the built assets know where the WebSocket lives.
+  director). Attaching it injects `BROADCAST_CONNECTION`, the `REVERB_*` variables and the
+  four `VITE_REVERB_*` variables, so nothing needs copying by hand.
 - Variables to set by hand: `APP_KEY`, `APP_URL`, `DIRECTOR_PASSWORD`,
   `BROADCAST_CONNECTION=reverb`, `QUEUE_CONNECTION=sync`, `CACHE_STORE=database`,
-  `SESSION_DRIVER=cookie` (the app doesn't use sessions; anything is fine).
+  and either `SESSION_DRIVER` value (the app doesn't use sessions; the database attach
+  offers `database`, which works because the default Laravel migration creates the table).
+  Uncheck the attach dialog's `QUEUE_CONNECTION=database` suggestion: there is no queue worker.
 
 **Build and deploy commands**
 
