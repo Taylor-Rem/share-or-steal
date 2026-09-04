@@ -558,7 +558,9 @@ class Engine
             ])->values()->all(),
             'aggregate' => Payloads::aggregate($decisions),
             'moments' => $anonymous ? [] : $this->moments->forDecision($pairings, $index, $s->decisions_per_round),
-            'leaderboard' => $anonymous ? [] : Payloads::leaderboard($participants, $pairings, $round),
+            // The ticker board: the top of the table only, so the payload stays under Reverb's
+            // 10 KB message limit with 30 players. The full board rides on round.summary.
+            'leaderboard' => $anonymous ? [] : array_slice(Payloads::leaderboard($participants, $pairings, $round), 0, (int) config('game.leaderboard_size')),
         ]));
 
         foreach ($pairings as $pairing) {
@@ -782,12 +784,21 @@ class Engine
         $this->outbox[] = $event;
     }
 
+    /**
+     * Send what the transition emitted, in order. A broadcast that fails (Reverb down, a
+     * payload over the 10 KB message limit) is reported and skipped; the rest still go out,
+     * and every one of them carries the new state.
+     */
     private function flush(): void
     {
         $events = $this->outbox;
         $this->outbox = [];
         foreach ($events as $event) {
-            event($event);
+            try {
+                event($event);
+            } catch (Throwable $e) {
+                report($e);
+            }
         }
     }
 

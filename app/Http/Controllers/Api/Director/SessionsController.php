@@ -27,7 +27,7 @@ class SessionsController extends Controller
             'rounds_count' => ['sometimes', 'integer', 'min:1', 'max:20'],
             'decisions_per_round' => ['sometimes', 'integer', 'min:1', 'max:30'],
             'fast_mode' => ['sometimes', 'boolean'],
-            'max_players' => ['sometimes', 'integer', 'min:'.config('game.min_players'), 'max:100'],
+            'max_players' => ['sometimes', 'integer', 'min:'.config('game.min_players'), 'max:40'],
         ]);
 
         $session = GameSession::create([

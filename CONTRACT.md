@@ -332,7 +332,10 @@ round summary starts after the last decision.
 }
 ```
 In an anonymous round `results` is `[]`, `moments` is `[]`, `leaderboard` is `[]`;
-`aggregate` is always present.
+`aggregate` is always present. `leaderboard` here is the top `game.leaderboard_size`
+(10) entries and `moments` at most `game.moments.max_per_decision` (8), rarest kinds
+first, so the payload stays under Reverb's 10 KB message limit with 30 players;
+`round.summary` carries the whole board.
 
 **`round.summary`** — the round scoreboard. `ends_at` is when the next pairing (or
 analysis) begins.
@@ -736,3 +739,6 @@ Append a dated line here whenever the contract changes, with the session that ma
   known device token returns `200` without re-broadcasting `player.joined`; a late joiner's
   `player.joined` is broadcast at `admit`, not at join. Timestamps are stored with
   microseconds and a UTC offset (`App\Models\Concerns\HasPreciseTimestamps`).
+  `decision.revealed` carries a top-10 `leaderboard` and at most 8 `moments`: Reverb (and
+  Pusher) refuse messages over 10 KB, and the full 30-player board plus 15 results was
+  crossing it. `max_players` at creation is capped at 40 for the same reason.

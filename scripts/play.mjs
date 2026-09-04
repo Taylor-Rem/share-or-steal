@@ -101,7 +101,7 @@ const dir = (method, path, body) => http(method, `/director${path}`, directorHea
 
 let code = args.code?.toUpperCase();
 if (!code) {
-    const { status, json } = await dir('POST', '/sessions', { mode: args.anonymous ? 'anonymous' : 'normal', fast_mode: !args.slow, rounds_count: Number(args.rounds ?? 5), decisions_per_round: Number(args.decisions ?? 10) });
+    const { status, json } = await dir('POST', '/sessions', { mode: args.anonymous ? 'anonymous' : 'normal', fast_mode: !args.slow, rounds_count: Number(args.rounds ?? 5), decisions_per_round: Number(args.decisions ?? 10), max_players: playerCount + 1 });
     if (status !== 201) { console.error('could not create a session', status, json); process.exit(1); }
     code = json.state.code;
     log(`created session ${code} (${json.state.mode}, ${json.state.rounds_count} x ${json.state.decisions_per_round}, fast=${json.state.fast_mode})`, json.urls.screen);

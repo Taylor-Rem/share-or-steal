@@ -67,7 +67,12 @@ final class Moments
             }
         }
 
-        return $moments;
+        // The feed can only show a handful in five seconds, and the payload must stay small:
+        // keep the rarest kinds, then cap.
+        $priority = array_flip(['comeback', 'mutual_share_streak', 'betrayal', 'mutual_steal']);
+        usort($moments, fn (array $x, array $y) => $priority[$x['type']] <=> $priority[$y['type']]);
+
+        return array_slice($moments, 0, (int) config('game.moments.max_per_decision'));
     }
 
     /** @param  list<Player>  $players */

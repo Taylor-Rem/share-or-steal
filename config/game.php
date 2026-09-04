@@ -67,7 +67,9 @@ return [
     'moments' => [
         'share_streak_at' => 3,   // a pair that has shared this many in a row earns a feed item (and again on a perfect round)
         'comeback_deficit' => 5,  // trailing your partner by this many points, then drawing level or ahead, is a comeback
+        'max_per_decision' => 8,  // feed items per reveal, rarest kinds first; keeps decision.revealed under Reverb's 10 KB limit
     ],
+    'leaderboard_size' => 10,      // entries in decision.revealed.leaderboard; round.summary carries the whole board
 
     /*
     | The house bot that fills the empty seat on odd counts. Tit-for-tat.
