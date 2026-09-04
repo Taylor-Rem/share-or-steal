@@ -1,30 +1,104 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { recall } from '../../shared/device';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useGameStore } from '../../shared/stores/game';
+import { deviceToken, recall, remember } from '../../shared/device';
+import { useAudio } from '../../shared/audio';
+import { vibrate, BUZZ } from '../../shared/haptics';
 
-// Session 2 builds the real join flow (code, username, remembers you). This just routes to /play/{code}.
+/**
+ * `/` — enter the room code and a name. Remembers both (sos.last_code, sos.username).
+ * The join tap is also the audio-unlock gesture.
+ */
 const router = useRouter();
-const code = ref(recall('last_code') ?? '');
+const route = useRoute();
+const store = useGameStore();
+const audio = useAudio();
 
-function go() {
-    if (code.value.trim()) router.push(`/play/${code.value.trim().toUpperCase()}`);
+const code = ref('');
+const username = ref('');
+const error = ref(null);
+const busy = ref(false);
+
+onMounted(() => {
+    code.value = String(route.query.code ?? recall('last_code') ?? '').toUpperCase();
+    username.value = recall('username') ?? '';
+    if (route.query.reason === 'not_joined' && code.value) error.value = `Enter your name to join ${code.value}.`;
+});
+
+const cleanCode = computed(() => code.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4));
+const canJoin = computed(() => cleanCode.value.length === 4 && username.value.trim().length >= 1 && username.value.trim().length <= 24 && !busy.value);
+
+function onCode(event) {
+    code.value = event.target.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4);
+}
+
+async function join() {
+    if (!canJoin.value) return;
+    error.value = null;
+    busy.value = true;
+    audio.unlock();
+    vibrate(BUZZ.tap);
+    try {
+        const data = await store.join({ code: cleanCode.value, username: username.value.trim(), deviceToken: deviceToken() });
+        remember('last_code', cleanCode.value);
+        remember('username', data.player.username);
+        audio.cue('join');
+        router.push(`/play/${cleanCode.value}`);
+    } catch (e) {
+        error.value = e.message ?? 'Something went wrong.';
+    } finally {
+        busy.value = false;
+    }
 }
 </script>
 
 <template>
-    <main class="flex min-h-screen flex-col items-center justify-center gap-4 p-6 font-mono">
-        <p class="rounded border border-amber-500/60 bg-amber-500/10 p-3 text-sm text-amber-200">
-            Phone — Session 0 placeholder. Not the game UI.
-        </p>
-        <form class="flex gap-2" @submit.prevent="go">
-            <input
-                v-model="code"
-                maxlength="4"
-                placeholder="CODE"
-                class="w-32 rounded bg-slate-800 p-3 text-center text-2xl uppercase tracking-widest"
-            />
-            <button class="rounded bg-green-600 px-4 text-lg">Go</button>
+    <main class="flex min-h-dvh flex-col items-center justify-center gap-8 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))]">
+        <header class="text-center">
+            <h1 class="text-4xl font-black tracking-tight"><span class="text-emerald-400">Share</span> or <span class="text-rose-400">Steal</span></h1>
+            <p class="mt-2 text-slate-400">Enter the code on the screen.</p>
+        </header>
+
+        <form class="flex w-full max-w-xs flex-col gap-4" @submit.prevent="join">
+            <label class="flex flex-col gap-1">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Room code</span>
+                <input
+                    :value="code"
+                    inputmode="latin"
+                    autocapitalize="characters"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    maxlength="4"
+                    placeholder="ABCD"
+                    class="h-16 rounded-2xl border border-slate-700 bg-slate-900 text-center font-mono text-3xl font-bold uppercase tracking-[0.4em] text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none"
+                    @input="onCode"
+                />
+            </label>
+            <label class="flex flex-col gap-1">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Your name</span>
+                <input
+                    v-model="username"
+                    type="text"
+                    autocomplete="nickname"
+                    maxlength="24"
+                    placeholder="Jordan"
+                    class="h-14 rounded-2xl border border-slate-700 bg-slate-900 px-4 text-center text-xl text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none"
+                />
+            </label>
+
+            <p v-if="error" class="rounded-xl border border-rose-500/50 bg-rose-500/10 px-4 py-3 text-center text-sm text-rose-200" role="alert">{{ error }}</p>
+
+            <button
+                type="submit"
+                :disabled="!canJoin"
+                class="h-16 touch-manipulation select-none rounded-2xl bg-emerald-500 text-xl font-bold text-slate-950 transition active:scale-95 disabled:opacity-40 motion-reduce:transition-none"
+            >
+                {{ busy ? 'Joining…' : 'Tap to join' }}
+            </button>
         </form>
+
+        <p class="text-xs text-slate-500">Keep this tab open during the game. If you get bumped, just reopen it.</p>
     </main>
 </template>

@@ -57,11 +57,11 @@ composer dev
 That is `php artisan reverb:start`, `php artisan game:run`, and `npm run dev` under
 `concurrently`. Herd serves the app itself at <http://steal-or-share.test>.
 
-Then open the three placeholder pages:
+Then open the pages:
 
 | Page | URL |
 |---|---|
-| Phone | <http://steal-or-share.test/play/DEMO> |
+| Phone | <http://steal-or-share.test/> (join), <http://steal-or-share.test/play/DEMO?fixture=1> (scripted game, no server needed; `?fixture=fast` for the fast clocks, `&anonymous=1` for codenames) |
 | Big screen | <http://steal-or-share.test/screen/DEMO> |
 | Director | <http://steal-or-share.test/director> → enter the `DIRECTOR_PASSWORD` and `DEMO` |
 
@@ -107,10 +107,15 @@ machine's LAN address.
 ```bash
 composer test          # Pest
 vendor/bin/pint        # Laravel Pint (--test to check only)
+npm test               # Vitest: the store's event handling, the clock, the fixture
 ```
 
-Tests run on SQLite in memory and need no database setup. CI (`.github/workflows/ci.yml`)
-runs Pint, Pest and `npm run build` on every push and pull request.
+Pest runs on SQLite in memory and needs no database setup. CI (`.github/workflows/ci.yml`)
+runs Pint, Pest, Vitest and `npm run build` on every push and pull request.
+
+To try the phone on a real handset, point `APP_URL`, `REVERB_HOST` and the Vite dev server
+at your machine's LAN IP (or use the Cloud URL), open `/` on the phone, and drive the other
+players with `scripts/play.mjs --code=XXXX --players=3` once you have joined.
 
 ---
 
@@ -124,6 +129,8 @@ app/Game/            the engine: Engine (state machine, commands, broadcasts), P
 app/Analysis/        Analyzer contract and the StubAnalyzer that Session 5 replaces
 app/Http/            join / me / choice and the director endpoints — CONTRACT.md § 10
 app/Console/         game:ping, game:run (the clock: one tick every game.tick_ms)
+resources/js/phone/  the player's phone: join page, one component per status, countdown ring
+resources/js/shared/ store (events -> state), clock offset, fixture player, audio/haptics hooks
 app/Models/          GameSession, Player, Round, Pairing, Decision, PlayerStat, Award
 config/game.php      every tunable: clocks, payoffs, thresholds, codenames
 database/            migrations, factories, DemoSessionSeeder (code DEMO)

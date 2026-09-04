@@ -11,4 +11,10 @@ Each entry is its own Vue 3 app with its own Vue Router and a Pinia instance, bu
 import the same `shared/stores/game.js`. Everything a client knows about the game arrives
 either from `GET /api/sessions/{code}` or from a broadcast; see `CONTRACT.md` at the repo root.
 
-Session 0 ships placeholder pages that show the raw state they receive. They are not the game UI.
+The phone (`phone/`) is real: `pages/Home.vue` joins, `pages/Play.vue` reconnects from
+`GET me` and renders one component per status from `components/`. `shared/fixtures/` is a
+scripted game in the contract's shapes; `?fixture=1` on `/play/{code}` plays it without a
+server (`?fixture=fast` for fast clocks). `shared/audio.js` exposes `useAudio()` with the
+named cues Session 6 implements; `shared/haptics.js` wraps `navigator.vibrate`.
+
+The screen and director pages are still Session 0 placeholders showing raw state.
