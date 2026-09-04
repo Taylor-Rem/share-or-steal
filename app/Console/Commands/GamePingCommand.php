@@ -22,7 +22,7 @@ class GamePingCommand extends Command
             return self::FAILURE;
         }
 
-        $playerIds = $session->players()->where('is_bot', false)->pluck('id')->all();
+        $playerIds = $session->players()->where('is_bot', false)->orderBy('id')->pluck('id')->all();
 
         GamePing::dispatch($session, (string) $this->option('message'), $playerIds);
 

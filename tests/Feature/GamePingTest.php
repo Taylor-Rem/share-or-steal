@@ -15,20 +15,20 @@ it('broadcasts game.ping to every channel of the session', function () {
         ->expectsOutputToContain('2 player channel(s)')
         ->assertSuccessful();
 
-    Event::assertDispatched(GamePing::class, function (GamePing $event) use ($players) {
-        $channels = collect($event->broadcastOn())->map->name->all();
-        $payload = $event->broadcastWith();
+    Event::assertDispatchedTimes(GamePing::class, 1);
+    $event = Event::dispatched(GamePing::class)->first()[0];
 
-        return $channels === [
-            'private-session.PING', 'private-screen.PING', 'private-director.PING',
-            'private-player.'.$players[0]->id, 'private-player.'.$players[1]->id,
-        ]
-            && $event->broadcastAs() === 'game.ping'
-            && $payload['event'] === 'game.ping'
-            && $payload['message'] === 'hello'
-            && $payload['state']['code'] === 'PING'
-            && preg_match('/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/', $payload['server_time']);
-    });
+    expect(collect($event->broadcastOn())->map->name->all())->toBe([
+        'private-session.PING', 'private-screen.PING', 'private-director.PING',
+        'private-player.'.$players[0]->id, 'private-player.'.$players[1]->id,
+    ])->and($event->broadcastAs())->toBe('game.ping');
+
+    $payload = $event->broadcastWith();
+    expect($payload['event'])->toBe('game.ping')
+        ->and($payload['message'])->toBe('hello')
+        ->and($payload['state']['code'])->toBe('PING')
+        ->and($payload['state']['player_count'])->toBe(2)
+        ->and($payload['server_time'])->toMatch('/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/');
 });
 
 it('fails cleanly for an unknown code', function () {
