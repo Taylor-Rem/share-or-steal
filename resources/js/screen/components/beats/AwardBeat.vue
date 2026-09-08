@@ -22,6 +22,7 @@ onMounted(() => {
         tl.to(dots.value.children, { y: -14, duration: dur(0.25), stagger: { each: dur(0.12), repeat: 5, yoyo: true } })
             .to(dots.value, { opacity: 0, duration: dur(0.15) })
             .add(() => (revealed.value = true))
+            .add(() => audio.cue('award_hit'))
             .add(() => name.value && timeline().from(name.value, { scale: 0.4, opacity: 0, duration: dur(0.6), ease: 'elastic.out(1, 0.5)' }), '+=0.05');
     } else {
         tl.to(dots.value, { opacity: 0, duration: dur(0.15) }).add(() => (revealed.value = true));

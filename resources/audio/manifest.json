@@ -1,0 +1,114 @@
+{
+  "_comment": "One sprite sheet per client. Each cue: src (relative to resources/audio/source), optional start/duration seconds, gain dB, loop. scripts/audio-pack.mjs turns this into public/audio/{client}.{webm,mp3,json}.",
+  "screen": {
+    "join": {
+      "src": "freesound/pop-744144.mp3",
+      "gain": 0
+    },
+    "tick": {
+      "src": "kenney/kenney_interface-sounds/Audio/tick_004.ogg",
+      "gain": -6
+    },
+    "tick_loud": {
+      "src": "kenney/kenney_interface-sounds/Audio/bong_001.ogg",
+      "gain": 0
+    },
+    "mutual_share": {
+      "src": "freesound/chime-bell-625174.mp3",
+      "gain": 0
+    },
+    "betrayal": {
+      "src": "freesound/betrayal-timpani-sting-578588.mp3",
+      "gain": 2
+    },
+    "mutual_steal": {
+      "src": "freesound/thud-653370.mp3",
+      "gain": 0
+    },
+    "round_end": {
+      "src": "freesound/fanfare-677858.mp3",
+      "duration": 3.4,
+      "gain": 0
+    },
+    "card": {
+      "src": "freesound/riser-hit-754771.mp3",
+      "duration": 2.4,
+      "gain": 0
+    },
+    "award": {
+      "src": "freesound/drumroll-smooth-440829.mp3",
+      "duration": 2.2,
+      "gain": 0
+    },
+    "award_hit": {
+      "src": "freesound/cymbal-151811.mp3",
+      "duration": 2.2,
+      "gain": 0
+    },
+    "podium": {
+      "src": "freesound/tadaa-415504.mp3",
+      "duration": 4.0,
+      "gain": 0
+    },
+    "music_lobby": {
+      "src": "freesound/lobby-happy-mouse-575481.mp3",
+      "loop": true,
+      "gain": -2
+    },
+    "music_round": {
+      "src": "freesound/round-pulse-loop-544240.mp3",
+      "loop": true,
+      "gain": -2
+    },
+    "music_intense": {
+      "src": "freesound/round-industrial-drums-849726.mp3",
+      "loop": true,
+      "gain": -4
+    },
+    "music_analysis": {
+      "src": "freesound/bed-solar-winds-580833.mp3",
+      "loop": true,
+      "gain": -3
+    }
+  },
+  "phone": {
+    "join": {
+      "src": "kenney/kenney_interface-sounds/Audio/confirmation_002.ogg",
+      "gain": 0
+    },
+    "tick": {
+      "src": "kenney/kenney_interface-sounds/Audio/tick_004.ogg",
+      "gain": -8
+    },
+    "lockin": {
+      "src": "kenney/kenney_ui-audio/Audio/click1.ogg",
+      "gain": 0
+    },
+    "mutual_share": {
+      "src": "freesound/chime-bell-625174.mp3",
+      "gain": 0
+    },
+    "betrayal": {
+      "src": "freesound/betrayal-timpani-sting-578588.mp3",
+      "gain": 0
+    },
+    "mutual_steal": {
+      "src": "freesound/thud-653370.mp3",
+      "gain": 0
+    },
+    "round_end": {
+      "src": "freesound/fanfare-677858.mp3",
+      "duration": 2.5,
+      "gain": -3
+    },
+    "card": {
+      "src": "kenney/kenney_casino-audio/Audio/card-place-1.ogg",
+      "gain": 0
+    },
+    "award": {
+      "src": "freesound/tadaa-415504.mp3",
+      "duration": 3.0,
+      "gain": 0
+    }
+  }
+}

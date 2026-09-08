@@ -25,8 +25,9 @@ watch(
 );
 const { fraction, seconds } = useCountdown(store.clock, deadline, total);
 const deciding = computed(() => store.status === 'deciding');
+// A soft tick each second while choosing, the last two louder.
 watch(seconds, (s, was) => {
-    if (deciding.value && s !== was && s > 0 && s <= 3) audio.cue('tick');
+    if (deciding.value && s !== was && s > 0) audio.cue(s <= 2 ? 'tick_loud' : 'tick');
 });
 
 const board = ref([]);

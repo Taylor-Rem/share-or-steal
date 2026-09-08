@@ -1,0 +1,72 @@
+{
+  "src": [
+    "/audio/screen.webm",
+    "/audio/screen.mp3"
+  ],
+  "sprite": {
+    "join": [
+      0,
+      127
+    ],
+    "tick": [
+      427,
+      55
+    ],
+    "tick_loud": [
+      782,
+      120
+    ],
+    "mutual_share": [
+      1202,
+      774
+    ],
+    "betrayal": [
+      2277,
+      1242
+    ],
+    "mutual_steal": [
+      3819,
+      592
+    ],
+    "round_end": [
+      4711,
+      2784
+    ],
+    "card": [
+      7795,
+      2145
+    ],
+    "award": [
+      10239,
+      2200
+    ],
+    "award_hit": [
+      12739,
+      2200
+    ],
+    "podium": [
+      15239,
+      4000
+    ],
+    "music_lobby": [
+      19539,
+      15000,
+      true
+    ],
+    "music_round": [
+      34839,
+      30000,
+      true
+    ],
+    "music_intense": [
+      65139,
+      16000,
+      true
+    ],
+    "music_analysis": [
+      81439,
+      32000,
+      true
+    ]
+  }
+}

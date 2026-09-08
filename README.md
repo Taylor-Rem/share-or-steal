@@ -102,6 +102,21 @@ rest and prints each transition. See `CONTRACT.md` § 10 for every endpoint.
 Phones on the same Wi-Fi can open the page too if you point `APP_URL`, `REVERB_HOST` and the Vite dev server at your
 machine's LAN address.
 
+### Sound
+
+The screen carries the room's audio (music beds and every sting); phones default to
+vibration with a sound toggle. Effects and loops are CC0 from Freesound and Kenney, listed
+with their sources in `resources/audio/LICENSES.md`. The sprite sheets in `public/audio/`
+are committed; to rebuild them after editing `resources/audio/manifest.json`:
+
+```bash
+brew install ffmpeg            # once
+node scripts/audio-pack.mjs    # -> public/audio/{screen,phone}.{webm,mp3,json}
+```
+
+Sources live in `resources/audio/source/` (gitignored); `LICENSES.md` says how to re-fetch
+them with `FREESOUND_API_KEY` from `.env`. The screen page needs one click to unlock audio.
+
 ### Tests and style
 
 ```bash

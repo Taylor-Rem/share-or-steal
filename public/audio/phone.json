@@ -1,0 +1,44 @@
+{
+  "src": [
+    "/audio/phone.webm",
+    "/audio/phone.mp3"
+  ],
+  "sprite": {
+    "join": [
+      0,
+      539
+    ],
+    "tick": [
+      839,
+      55
+    ],
+    "lockin": [
+      1194,
+      91
+    ],
+    "mutual_share": [
+      1585,
+      774
+    ],
+    "betrayal": [
+      2660,
+      1242
+    ],
+    "mutual_steal": [
+      4202,
+      592
+    ],
+    "round_end": [
+      5094,
+      2500
+    ],
+    "card": [
+      7894,
+      609
+    ],
+    "award": [
+      8803,
+      3000
+    ]
+  }
+}
