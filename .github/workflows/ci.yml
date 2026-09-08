@@ -80,6 +80,7 @@ jobs:
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
       PHP_CLI_SERVER_WORKERS: 8
+      GAME_FAST_CHOOSE_MS: 2000
     steps:
       - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2

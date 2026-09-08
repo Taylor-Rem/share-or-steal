@@ -42,6 +42,8 @@ final class SimulatedPlayer
 
     private ?string $lastSubmitted = null;
 
+    private bool $lastAccepted = false;
+
     private bool $offline = false;
 
     public function __construct(
@@ -120,10 +122,12 @@ final class SimulatedPlayer
                 if ($payload['you']['timed_out']) {
                     $this->record['timeouts_seen']++;
                 }
-                if ($this->lastSubmitted !== null) {
+                // Only a first tap the server accepted can be kept or lost.
+                if ($this->lastSubmitted !== null && $this->lastAccepted) {
                     $this->record[$payload['you']['choice'] === $this->lastSubmitted ? 'first_choice_kept' : 'first_choice_lost']++;
-                    $this->lastSubmitted = null;
                 }
+                $this->lastSubmitted = null;
+                $this->lastAccepted = false;
                 break;
             case 'you.nudged':
                 $this->record['nudges']++;
@@ -192,8 +196,13 @@ final class SimulatedPlayer
         // A phone's taps go out one after another on one connection; the second waits for the first.
         $submissions = $this->strategy->submissions($choice);
         $this->lastSubmitted = $submissions[0]->value;
+        $this->lastAccepted = false;
         $this->loop->addTimer($delay / 1000, function () use ($submissions, $roundNumber, $index) {
-            $chain = $this->submit($submissions[0], $roundNumber, $index);
+            $chain = $this->submit($submissions[0], $roundNumber, $index)->then(function (array $res) {
+                $this->lastAccepted = $res['status'] === 200 && ($res['json']['accepted'] ?? false);
+
+                return $res;
+            });
             foreach (array_slice($submissions, 1) as $extra) {
                 $chain = $chain->then(fn () => $this->after(0.05)->then(fn () => $this->submit($extra, $roundNumber, $index)));
             }
