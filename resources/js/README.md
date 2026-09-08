@@ -21,4 +21,7 @@ The director (`director/`) is real too: `useDirector.js` keeps the key and wraps
 endpoints, `logic.js` holds the pure rules (which button, how to name a beat), and the
 three pages are the gate + create/history, the control panel, and the analysis tables.
 
-The screen page is still a Session 0 placeholder showing raw state.
+The screen (`screen/`) renders the public channel only: `pages/Screen.vue` picks a component
+per status, `components/beats/` has one GSAP timeline per analysis beat type, `logic.js` the
+pure bits (feed, sound choice, clipping), and `anim.js` wraps GSAP so every duration collapses
+under prefers-reduced-motion. `?fixture=1` plays the scripted game here too.

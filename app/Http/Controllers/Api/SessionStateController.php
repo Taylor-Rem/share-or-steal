@@ -29,6 +29,20 @@ class SessionStateController extends Controller
             'players' => $session->isAnonymous()
                 ? []
                 : $players->map(fn ($p) => $p->toPublicArray())->values(),
+            // The beat on screen right now, so a projector that reloads mid-analysis can draw it.
+            'beat' => $this->currentBeat($session),
         ]);
+    }
+
+    /** The `analysis.beat` payload for the current beat (its screen half), or null outside the analysis. */
+    private function currentBeat(GameSession $session): ?array
+    {
+        $beats = $session->analysis_beats ?? [];
+        $index = $session->analysis_beat;
+        if ($index === null || ! isset($beats[$index]) || ! in_array($session->status->value, ['analysis', 'finished'], true)) {
+            return null;
+        }
+
+        return ['index' => (int) $index, 'count' => count($beats), 'type' => $beats[$index]['type'], 'payload' => $beats[$index]['screen']];
     }
 }

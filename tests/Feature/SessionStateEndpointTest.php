@@ -2,6 +2,7 @@
 
 use App\Models\GameSession;
 use App\Models\Player;
+use Database\Seeders\DemoSessionSeeder;
 
 it('returns the public snapshot for a session', function () {
     $session = GameSession::factory()->create(['code' => 'ABCD']);
@@ -14,7 +15,20 @@ it('returns the public snapshot for a session', function () {
         ->assertJsonPath('state.player_count', 3)
         ->assertJsonCount(3, 'players')
         ->assertJsonMissingPath('players.0.device_token')
-        ->assertJsonStructure(['server_time', 'state', 'players']);
+        ->assertJsonPath('beat', null)
+        ->assertJsonStructure(['server_time', 'state', 'players', 'beat']);
+});
+
+it('carries the beat on screen during the analysis', function () {
+    $this->seed(DemoSessionSeeder::class);
+    GameSession::where('code', 'DEMO')->update(['analysis_beat' => 2]);
+
+    $this->getJson('/api/sessions/DEMO')
+        ->assertOk()
+        ->assertJsonPath('beat.index', 2)
+        ->assertJsonPath('beat.count', 20)
+        ->assertJsonPath('beat.type', 'archetype_reveal')
+        ->assertJsonStructure(['beat' => ['index', 'count', 'type', 'payload' => ['player', 'archetype']]]);
 });
 
 it('hides player names in anonymous mode', function () {
