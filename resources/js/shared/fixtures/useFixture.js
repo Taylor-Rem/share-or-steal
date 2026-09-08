@@ -1,8 +1,9 @@
 import { buildFixture } from './game';
 
 /**
- * Feed a scripted game into the store on a timer. `?fixture=1` on the phone (or screen)
- * turns it on; `?fixture=fast` uses the fast clocks. Returns a controller with `stop()`.
+ * Feed a scripted game into the store on a timer. `?fixture=1` on the phone or the screen
+ * turns it on; `?fixture=fast` uses the fast clocks; `&anonymous=1` and `&comparison=1`
+ * pick the variants. Returns a controller with `stop()`.
  *
  * Choices made while a decision is open go to the fixture instead of the server, and the
  * next reveal reflects them; a second tap is rejected as `already_chosen`, like the API.
@@ -37,7 +38,7 @@ export function useFixture(store, options = {}) {
         },
     };
 
-    store.configure({ code: options.code ?? 'DEMO', kind: store.kind ?? 'phone' });
+    store.configure({ code: options.code ?? 'DEMO', kind: options.kind ?? store.kind ?? 'phone' });
     store._fixture = controller;
     store.connection = 'fixture';
     store.applyMe(fixture.me);

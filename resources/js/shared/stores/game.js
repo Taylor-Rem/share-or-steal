@@ -351,6 +351,7 @@ export const useGameStore = defineStore('game', {
                 this._clock.sync(data.server_time);
                 this.state = data.state;
                 this.players = data.players ?? [];
+                if (data.beat) this.beat = data.beat;
                 this.lastError = null;
             } catch (error) {
                 this.lastError = error?.response?.status === 404 ? `No session with code ${this.code}` : String(error);

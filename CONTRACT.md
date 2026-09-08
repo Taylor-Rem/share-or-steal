@@ -451,9 +451,11 @@ the endpoint below (`not_enough_players`, `session_full`, …); `POST choice` ha
 
 **`GET /api/sessions/{code}`** — the first thing every client loads.
 ```json
-{ "server_time": "…", "state": State, "players": [ PublicPlayer ] }
+{ "server_time": "…", "state": State, "players": [ PublicPlayer ], "beat": { "index": 3, "count": 24, "type": "…", "payload": { … } } }
 ```
-`players` is non-kicked players in join order; `[]` in anonymous mode.
+`players` is non-kicked players in join order; `[]` in anonymous mode. `beat` is the
+current `analysis.beat` payload (the beat's `screen` half) during the analysis and after
+the end, `null` otherwise, so a screen that reloads mid-analysis can draw what is up.
 
 ### 10.2 Player (`X-Device-Token`)
 

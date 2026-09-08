@@ -20,6 +20,7 @@ describe('fixture game', () => {
         expect(names.filter((n) => n === 'decision.opened')).toHaveLength(3);
         expect(names.filter((n) => n === 'you.revealed')).toHaveLength(3);
         expect(names.at(-1)).toBe('session.ended');
+        expect(names.filter((n) => n === 'analysis.beat')).toHaveLength(2 + 6 + 2 + 9 + 1);
         const opened = events.find((e) => e.event === 'decision.opened');
         expect(opened.payload.deadline_at).toBe('2026-09-04T17:00:01.000Z');
         expect(opened.payload.state.phase_ends_at).toBe(opened.payload.deadline_at);
@@ -56,9 +57,10 @@ describe('fixture game', () => {
         expect(store.status).toBe('round_summary');
         expect(store.roundSummary.round_points).toBe(8);
 
-        vi.advanceTimersByTime(3000 + 4000 * 4);
+        vi.advanceTimersByTime(3000 + 1500 * 25);
         expect(store.status).toBe('finished');
         expect(store.cards.map((c) => c.type)).toEqual(['archetype_reveal', 'award', 'podium']);
+        expect(store.beat.type).toBe('podium');
         expect(fixture.done).toBe(true);
     });
 });
