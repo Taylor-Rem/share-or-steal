@@ -146,17 +146,26 @@ final class SimulatedPlayer
         if ($offline !== null && $roundNumber === $offline[0] && $index === $offline[1] && ! $this->offline) {
             $this->offline = true;
             $this->socket?->close();
-            $away = ($offline[2] - $offline[1] + 1) * 2 * $chooseMs - 250;
-            ($this->log)("{$this->name}: offline for {$away} ms");
-            $this->loop->addTimer($away / 1000, function () {
-                $this->http->request('GET', "sessions/{$this->code}/me", $this->headers())->then(function (array $res) {
-                    if ($res['status'] === 200) {
-                        $this->round = [];
-                        foreach ([$res['json']['last_reveal']] as $reveal) {
-                            if ($reveal) {
-                                $this->round[] = ['me' => $reveal['you']['choice'], 'them' => $reveal['partner']['choice']];
-                            }
-                        }
+            ($this->log)("{$this->name}: offline until decision {$offline[2]} is revealed");
+            // A phone in a pocket: nothing arrives. Poll the snapshot until the missed decisions
+            // are behind us, then reconnect the way a reloaded phone does (CONTRACT.md § 12).
+            $poll = function () use (&$poll, $offline) {
+                $this->http->request('GET', "sessions/{$this->code}/me", $this->headers())->then(function (array $res) use (&$poll, $offline) {
+                    $state = $res['json']['state'] ?? [];
+                    $past = $res['status'] === 200 && (
+                        ($state['round'] ?? 0) > $offline[0]
+                        || ($state['decision'] ?? 0) > $offline[2]
+                        || (($state['decision'] ?? 0) === $offline[2] && ($state['status'] ?? '') === 'revealing')
+                        || in_array($state['status'] ?? '', ['round_summary', 'analysis', 'finished'], true)
+                    );
+                    if (! $past) {
+                        $this->loop->addTimer(0.2, $poll);
+
+                        return;
+                    }
+                    $this->round = [];
+                    if ($reveal = $res['json']['last_reveal'] ?? null) {
+                        $this->round[] = ['me' => $reveal['you']['choice'], 'them' => $reveal['partner']['choice']];
                     }
                     $this->connect(function () {
                         $this->offline = false;
@@ -164,7 +173,8 @@ final class SimulatedPlayer
                         ($this->log)("{$this->name}: back online");
                     });
                 });
-            });
+            };
+            $this->loop->addTimer(0.5, $poll);
 
             return;
         }

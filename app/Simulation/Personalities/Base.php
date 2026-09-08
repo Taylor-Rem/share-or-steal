@@ -6,12 +6,12 @@ use App\Enums\Choice;
 use App\Simulation\History;
 use App\Simulation\Strategy;
 
-/** A normal thumb: taps somewhere in the first 60% of the window, once, and stays online. */
+/** A normal thumb: taps somewhere in the first 45% of the window, once, and stays online. */
 abstract class Base implements Strategy
 {
     public function tapDelayMs(History $history, int $chooseMs): ?int
     {
-        return $history->rng->getInt(150, max(150, (int) ($chooseMs * 0.6)));
+        return $history->rng->getInt(150, max(150, (int) ($chooseMs * 0.45)));
     }
 
     public function submissions(Choice $choice): array
