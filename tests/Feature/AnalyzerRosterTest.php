@@ -41,12 +41,11 @@ const OVERLAPS = [
 
 const SEED_ONE = [
     'saint_1' => 'saint', 'saint_2' => 'saint', 'wall_1' => 'wall', 'wall_2' => 'wall',
-    'mirror_1' => 'saint', 'mirror_2' => 'mirror', 'mirror_3' => 'mirror', 'mirror_4' => 'mirror',
+    'mirror_1' => 'saint', 'mirror_2' => 'mirror', 'mirror_3' => 'mirror', 'mirror_4' => 'saint',
     'grudge_1' => 'grudge', 'grudge_2' => 'grudge', 'diplomat_1' => 'saint', 'diplomat_2' => 'mirror',
-    'backstabber_1' => 'backstabber', 'backstabber_2' => 'backstabber',
-    'opportunist_1' => 'opportunist', 'opportunist_2' => 'opportunist', 'opportunist_3' => 'opportunist',
-    'wildcard_1' => 'wildcard', 'wildcard_2' => 'wildcard',
-    'pragmatist_1' => 'pragmatist', 'pragmatist_2' => 'pragmatist', 'pragmatist_3' => 'diplomat', 'pragmatist_4' => 'pragmatist', 'pragmatist_5' => 'pragmatist',
+    'backstabber_1' => 'backstabber', 'backstabber_2' => 'backstabber', 'opportunist_1' => 'opportunist', 'opportunist_2' => 'opportunist',
+    'opportunist_3' => 'opportunist', 'wildcard_1' => 'wildcard', 'wildcard_2' => 'wildcard', 'pragmatist_1' => 'pragmatist',
+    'pragmatist_2' => 'pragmatist', 'pragmatist_3' => 'pragmatist', 'pragmatist_4' => 'pragmatist', 'pragmatist_5' => 'pragmatist',
     'sleeper_1' => 'pragmatist', 'sleeper_2' => 'pragmatist', 'ghost_1' => 'mirror', 'straggler_1' => 'pragmatist',
     'speedster_1' => 'mirror', 'double_tapper_1' => 'mirror',
 ];
