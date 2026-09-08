@@ -16,8 +16,9 @@ use Tests\Support\ScriptedGame;
  *   - a copycat (mirror, speedster, double-tapper, ghost) that met only sharers is a saint;
  *   - a diplomat that was never stolen from twice in a row never had to forgive, so it is a mirror
  *     (and a saint in a kind draw);
- *   - a grudge that was never offered an olive branch is a mirror, and one that shared
- *     generously until it was stabbed on decision 8 or 9 is a backstabber;
+ *   - a grudge that was never offered an olive branch is a mirror, one that shared
+ *     generously until it was stabbed on decision 8 or 9 is a backstabber, and one that was
+ *     never stolen from at all is a saint;
  *   - wildcards and pragmatists trade places at the predictability cutoff, and a coin-flipper
  *     who happened to forgive is a diplomat;
  *   - a pragmatist who forgave and never pounced is a diplomat; one whose steals all landed on
@@ -30,7 +31,7 @@ const OVERLAPS = [
     'speedster' => ['mirror', 'saint'],
     'double_tapper' => ['mirror', 'saint'],
     'ghost' => ['mirror', 'saint'],
-    'grudge' => ['grudge', 'mirror', 'backstabber'],
+    'grudge' => ['grudge', 'mirror', 'backstabber', 'saint'],
     'diplomat' => ['diplomat', 'mirror', 'saint'],
     'backstabber' => ['backstabber'],
     'opportunist' => ['opportunist'],

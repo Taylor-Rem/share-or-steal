@@ -18,7 +18,7 @@ final class Assertions
         'speedster' => ['mirror', 'saint'],
         'double_tapper' => ['mirror', 'saint'],
         'ghost' => ['mirror', 'saint'],
-        'grudge' => ['grudge', 'mirror', 'backstabber'],
+        'grudge' => ['grudge', 'mirror', 'backstabber', 'saint'],
         'diplomat' => ['diplomat', 'mirror', 'saint'],
         'backstabber' => ['backstabber'],
         'opportunist' => ['opportunist'],
