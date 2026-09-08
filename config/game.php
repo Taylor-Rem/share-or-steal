@@ -116,14 +116,22 @@ return [
     | Session 5; the first rule that matches wins. Everyone else is a Pragmatist.
     */
     'thresholds' => [
-        'saint' => ['share_rate_min' => 0.90],
+        // 0.90 made a mirror in a kind room a saint; a saint who slipped once in fifty is still one.
+        'saint' => ['share_rate_min' => 0.95],
         'wall' => ['share_rate_max' => 0.15],
-        'backstabber' => ['endgame_shift_max' => -0.40, 'early_share_rate_min' => 0.60],
-        'grudge' => ['post_steal_share_rate_max' => 0.10],
-        'mirror' => ['match_rate_min' => 0.75],
-        'diplomat' => ['forgiveness_min' => 0.60, 'share_rate_min' => 0.60],
-        'opportunist' => ['exploitation_share_of_steals_min' => 0.50, 'share_rate_min' => 0.30, 'share_rate_max' => 0.70],
-        'wildcard' => ['predictability_bottom_fraction' => 0.15],
+        // A backstabber was a near-perfect partner first; a grudge that got stabbed on 8 is not one.
+        'backstabber' => ['endgame_shift_max' => -0.40, 'early_share_rate_min' => 0.80],
+        // Never shares again after a steal, and refuses the partner's olive branches too (a
+        // mirror against a wall fails the second test: it was never offered one).
+        'grudge' => ['post_steal_share_rate_max' => 0.10, 'olive_branch_share_rate_max' => 0.10],
+        // Diplomats copy about 90% of the time and pragmatists about 70%; the tournament winner is above both.
+        'mirror' => ['match_rate_min' => 0.90],
+        // Forgives, shares, and does not pounce on sharers (that is the opportunist).
+        'diplomat' => ['forgiveness_min' => 0.60, 'share_rate_min' => 0.60, 'exploitation_rate_max' => 0.50],
+        // A coin-flipper's steals land on sharers about as often as the room shares (~0.6), so 0.5 caught them.
+        'opportunist' => ['exploitation_share_of_steals_min' => 0.80, 'share_rate_min' => 0.16, 'share_rate_max' => 0.70],
+        // Bottom tenth of the room by predictability: three players in a room of thirty.
+        'wildcard' => ['predictability_bottom_fraction' => 0.10],
     ],
 
     /*
@@ -132,6 +140,7 @@ return [
     'awards' => [
         'most_forgiving_min_times_stolen_from' => 3,
         'kindest_excludes_all_timeouts' => true, // a player whose every share was a timeout is not Kindest
+        'all_timeouts_win_nothing' => true,      // ...and wins nothing else either (partners of a sleeper earn the most, which is not Best Partner)
         'podium_places' => 3,
     ],
 ];

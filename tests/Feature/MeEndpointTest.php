@@ -73,12 +73,14 @@ it('returns the latest card in the analysis', function () {
 
     asPlayer($players[0])->getJson('/api/sessions/ROOM/me')->assertJsonPath('card', null);
 
-    engine()->next($session); // podium: everyone has a card
+    $last = count($session->refresh()->analysis_beats) - 1;
+    while ($session->refresh()->analysis_beat < $last) {
+        engine()->next($session); // to the podium: everyone has a card
+    }
     asPlayer($players[0])->getJson('/api/sessions/ROOM/me')
         ->assertJsonPath('card.type', 'podium')
-        ->assertJsonPath('card.index', 1)
-        ->assertJsonPath('card.payload.rank', 1)
-        ->assertJsonPath('card.payload.awards.0.key', 'champion');
+        ->assertJsonPath('card.index', $last)
+        ->assertJsonPath('card.payload.rank', 1);
 });
 
 it('serves a late joiner and a kicked player, but not a stranger', function () {

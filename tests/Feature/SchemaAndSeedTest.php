@@ -14,7 +14,9 @@ it('seeds a finished two-round demo game in the contract shape', function () {
         ->and($session->players)->toHaveCount(6)
         ->and($session->rounds)->toHaveCount(2)
         ->and($session->stats)->toHaveCount(6)
-        ->and($session->awards->where('key.value', 'champion'))->toHaveCount(3);
+        ->and($session->awards->where('key.value', 'champion'))->toHaveCount(3)
+        ->and($session->awards->where('key.value', 'kindest')->first()->player->username)->toBe('Jordan')
+        ->and($session->awards->where('key.value', 'most_ruthless')->first()->player->username)->toBe('Priya');
 
     $decisions = $session->rounds->flatMap->pairings->flatMap->decisions;
     expect($decisions)->toHaveCount(60)

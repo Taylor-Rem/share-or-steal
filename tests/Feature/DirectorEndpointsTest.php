@@ -216,8 +216,8 @@ it('serves the computed analysis', function () {
         ->assertJsonPath('state.status', 'analysis')
         ->assertJsonCount(2, 'stats')
         ->assertJsonPath('stats.0.rank', 1)
-        ->assertJsonPath('awards.0.key', 'champion')
-        ->assertJsonPath('awards.0.place', 1)
+        ->assertJsonCount(0, 'awards') // nobody chose anything, so nobody won anything
+        ->assertJsonPath('stats.0.archetype.key', 'pragmatist')
         ->assertJsonPath('beats.0.type', 'room_share_rate')
-        ->assertJsonStructure(['stats' => [['player', 'total_points', 'rank', 'share_rate', 'archetype']], 'awards' => [['key', 'label', 'description', 'winner', 'value', 'value_label', 'tie_break']], 'beats']);
+        ->assertJsonStructure(['stats' => [['player', 'total_points', 'rank', 'share_rate', 'archetype']], 'awards', 'beats']);
 });

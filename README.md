@@ -110,7 +110,10 @@ vendor/bin/pint        # Laravel Pint (--test to check only)
 npm test               # Vitest: the store's event handling, the clock, the fixture
 ```
 
-Pest runs on SQLite in memory and needs no database setup. CI (`.github/workflows/ci.yml`)
+Pest runs on SQLite in memory and needs no database setup. `tests/Support/ScriptedGame.php`
+plays a roster of personalities (or explicit move lists) straight into the database, so an
+analysis test is a few lines; `AnalyzerRosterTest` pins the archetype every personality lands
+on and prints the new snapshot when a threshold in `config/game.php` moves. CI (`.github/workflows/ci.yml`)
 runs Pint, Pest, Vitest and `npm run build` on every push and pull request.
 
 To try the phone on a real handset, point `APP_URL`, `REVERB_HOST` and the Vite dev server
@@ -127,7 +130,8 @@ app/Auth/            header-based identity (players, director, screen) — CONTR
 app/Enums/           SessionStatus, SessionMode, Choice, Archetype, AwardKey
 app/Events/          GameBroadcast base (envelope + state) and one class per CONTRACT.md § 9 event
 app/Game/            the engine: Engine (state machine, commands, broadcasts), Pairer, Moments, Payloads
-app/Analysis/        Analyzer contract and the StubAnalyzer that Session 5 replaces
+app/Analysis/        the analysis: DecisionLog -> Stats -> Ladder + Awards -> Beats (+ Comparison)
+app/Simulation/      Personality: the scripted roster the analysis is tested against and the simulator plays
 app/Http/            join / me / choice and the director endpoints — CONTRACT.md § 10
 app/Console/         game:ping, game:run (the clock: one tick every game.tick_ms)
 resources/js/phone/  the player's phone: join page, one component per status, countdown ring
