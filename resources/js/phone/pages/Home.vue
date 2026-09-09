@@ -3,8 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useGameStore } from '../../shared/stores/game';
 import { deviceToken, recall, remember } from '../../shared/device';
-import Avatar from '../../shared/Avatar.vue';
-import { AVATAR_COLORS, AVATAR_EMOJI, SWATCHES } from '../../shared/avatars';
+import { AVATAR_COLORS, AVATAR_EMOJI } from '../../shared/avatars';
 import { useAudio } from '../../shared/audio';
 import { vibrate, BUZZ } from '../../shared/haptics';
 
@@ -21,7 +20,7 @@ const code = ref('');
 const username = ref('');
 const error = ref(null);
 const busy = ref(false);
-const avatar = ref({ emoji: AVATAR_EMOJI[Math.floor(Math.random() * AVATAR_EMOJI.length)], color: AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)] });
+const avatar = ref(null); // the look picked last time, if any; the waiting room is where you pick
 audio.use('phone');
 
 onMounted(() => {
@@ -53,7 +52,6 @@ async function join() {
         const data = await store.join({ code: cleanCode.value, username: username.value.trim(), deviceToken: deviceToken(), avatar: avatar.value });
         remember('last_code', cleanCode.value);
         remember('username', data.player.username);
-        remember('avatar', JSON.stringify(avatar.value));
         audio.cue('join');
         router.push(`/play/${cleanCode.value}`);
     } catch (e) {
@@ -98,40 +96,6 @@ async function join() {
                     class="h-14 rounded-2xl border border-slate-700 bg-slate-900 px-4 text-center text-xl text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none"
                 />
             </label>
-
-            <fieldset class="flex flex-col gap-2">
-                <legend class="mb-1 flex w-full items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    <span>Your look</span>
-                    <Avatar :avatar="avatar" :name="username" :size="2.25" />
-                </legend>
-                <div class="grid grid-cols-8 gap-1.5" role="radiogroup" aria-label="Emoji">
-                    <button
-                        v-for="e in AVATAR_EMOJI"
-                        :key="e"
-                        type="button"
-                        role="radio"
-                        :aria-checked="avatar.emoji === e"
-                        class="flex h-10 touch-manipulation items-center justify-center rounded-xl text-2xl transition active:scale-90 motion-reduce:transition-none"
-                        :class="avatar.emoji === e ? 'bg-slate-700 ring-2 ring-emerald-400' : 'bg-slate-900'"
-                        @click="avatar = { ...avatar, emoji: e }"
-                    >
-                        {{ e }}
-                    </button>
-                </div>
-                <div class="grid grid-cols-8 gap-1.5" role="radiogroup" aria-label="Colour">
-                    <button
-                        v-for="c in AVATAR_COLORS"
-                        :key="c"
-                        type="button"
-                        role="radio"
-                        :aria-checked="avatar.color === c"
-                        :aria-label="c"
-                        class="h-8 touch-manipulation rounded-full transition active:scale-90 motion-reduce:transition-none"
-                        :class="[SWATCHES[c], avatar.color === c ? 'ring-4 ring-white/80' : 'opacity-70']"
-                        @click="avatar = { ...avatar, color: c }"
-                    />
-                </div>
-            </fieldset>
 
             <p v-if="error" class="rounded-xl border border-rose-500/50 bg-rose-500/10 px-4 py-3 text-center text-sm text-rose-200" role="alert">{{ error }}</p>
 

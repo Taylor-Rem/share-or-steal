@@ -300,6 +300,12 @@ type AwardInfo = { key: string; label: string; description: string }; // see App
 ```
 In anonymous mode `player` is `null` (screen shows a pop and the count only).
 
+**`player.updated`** — a player changed their look from the waiting room.
+```json
+{ "player": { "id": 12, "username": "Jordan", "is_bot": false, "avatar": { "emoji": "🦊", "color": "amber" } } }
+```
+Not sent in anonymous mode (nothing on the screen shows it).
+
 **`player.left`** — kicked (or, later, left).
 ```json
 { "player_id": 12, "reason": "kicked", "player_count": 6 }
@@ -492,6 +498,16 @@ render the current moment without waiting for the next event.
 }
 ```
 `round` and `decision` are `null` when not applicable.
+
+**`POST /api/sessions/{code}/avatar`** — pick or change your look; any player of the session, admitted or not.
+```json
+// request
+{ "emoji": "🦊", "color": "amber" }
+// 200
+{ "server_time": "…", "player": PublicPlayer }
+```
+Both halves must come from `config('game.avatars')` (`422` otherwise). Broadcasts
+`player.updated` (normal mode) and `director.player_updated`.
 
 **`POST /api/sessions/{code}/choice`**
 ```json

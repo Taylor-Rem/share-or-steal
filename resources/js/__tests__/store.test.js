@@ -145,3 +145,31 @@ describe('game store', () => {
         expect(normalizeJoinError({}).reason).toBe('network');
     });
 });
+
+describe('game store: looks', () => {
+    beforeEach(() => setActivePinia(createPinia()));
+
+    it('applies player.updated to the room and to me', () => {
+        const store = useGameStore();
+        store.configure({ code: 'ROOM', kind: 'phone', deviceToken: 'tok' });
+        store.me = { id: 1, username: 'You', is_bot: false, avatar: null };
+        store.players = [store.me, { id: 2, username: 'Priya', is_bot: false, avatar: null }];
+        const look = { emoji: '🦊', color: 'amber' };
+        store.receive('session.ROOM', '.player.updated', { event: 'player.updated', server_time: '2026-09-10T17:00:00.000Z', state: state(), player: { id: 1, username: 'You', is_bot: false, avatar: look } });
+        expect(store.me.avatar).toEqual(look);
+        expect(store.players[0].avatar).toEqual(look);
+        expect(store.players[1].avatar).toBeNull();
+    });
+
+    it('posts a look and keeps the answer', async () => {
+        const store = useGameStore();
+        store.configure({ code: 'ROOM', kind: 'phone', deviceToken: 'tok' });
+        store.me = { id: 1, username: 'You', is_bot: false, avatar: null };
+        store.players = [store.me];
+        const post = vi.spyOn(store._api, 'post').mockResolvedValue({ data: { server_time: '2026-09-10T17:00:00.000Z', player: { id: 1, username: 'You', is_bot: false, avatar: { emoji: '🐙', color: 'violet' } } } });
+        await store.setAvatar({ emoji: '🐙', color: 'violet' });
+        expect(post).toHaveBeenCalledWith('/sessions/ROOM/avatar', { emoji: '🐙', color: 'violet' });
+        expect(store.me.avatar.emoji).toBe('🐙');
+        expect(store.players[0].avatar.emoji).toBe('🐙');
+    });
+});

@@ -3,6 +3,7 @@
 use App\Enums\SessionStatus;
 use App\Events\DirectorPlayerUpdated;
 use App\Events\PlayerJoined;
+use App\Events\PlayerUpdated;
 use App\Events\YouPaired;
 use App\Models\GameSession;
 use App\Models\Player;
@@ -135,4 +136,27 @@ it('hides the avatar behind a codename and gives The Machine its own', function 
     $paired = payloadsOf(YouPaired::class);
     expect($paired->every(fn ($p) => $p['partner']['is_codename'] === false ? true : $p['partner']['avatar'] === null))->toBeTrue()
         ->and($paired->first(fn ($p) => $p['partner']['is_bot'])['partner']['avatar'])->toBe(config('game.avatars.bot'));
+});
+
+it('changes a look from the waiting room and tells the room', function () {
+    [$session, $players] = lobby(2, ['code' => 'ROOM']);
+
+    asPlayer($players[0])->postJson('/api/sessions/ROOM/avatar', ['emoji' => '🐙', 'color' => 'violet'])
+        ->assertOk()
+        ->assertJsonPath('player.avatar.emoji', '🐙')
+        ->assertJsonStructure(['server_time', 'player']);
+    expect($players[0]->refresh()->avatar())->toBe(['emoji' => '🐙', 'color' => 'violet']);
+    expect(payloadsOf(PlayerUpdated::class)->sole()['player']['id'])->toBe($players[0]->id);
+    expect(payloadsOf(DirectorPlayerUpdated::class)->last()['player']['avatar']['emoji'])->toBe('🐙');
+
+    asPlayer($players[0])->postJson('/api/sessions/ROOM/avatar', ['emoji' => '💩', 'color' => 'violet'])->assertUnprocessable();
+    api()->postJson('/api/sessions/ROOM/avatar', ['emoji' => '🐙', 'color' => 'violet'])->assertUnauthorized();
+});
+
+it('keeps a look change off the public channel in anonymous mode', function () {
+    [$session, $players] = lobby(2, ['code' => 'ANON', 'mode' => 'anonymous']);
+
+    asPlayer($players[0])->postJson('/api/sessions/ANON/avatar', ['emoji' => '🐙', 'color' => 'violet'])->assertOk();
+    Event::assertNotDispatched(PlayerUpdated::class);
+    Event::assertDispatched(DirectorPlayerUpdated::class);
 });
