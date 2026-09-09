@@ -53,7 +53,8 @@ async function load(which) {
     client = which;
     unlockOnFirstGesture();
     try {
-        const res = await fetch(`/audio/${which}.json`, { cache: 'force-cache' });
+        // The map is tiny and names versioned file URLs; never serve it stale.
+        const res = await fetch(`/audio/${which}.json`, { cache: 'no-cache' });
         const map = await res.json();
         sprite = map.sprite;
         howl = new Howl({ src: map.src, sprite: map.sprite, preload: true, html5: false, onload: () => (loaded.value = true) });

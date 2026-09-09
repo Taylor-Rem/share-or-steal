@@ -1,7 +1,8 @@
 {
+  "version": "3d88b2d3",
   "src": [
-    "/audio/screen.webm",
-    "/audio/screen.mp3"
+    "/audio/screen.webm?v=3d88b2d3",
+    "/audio/screen.mp3?v=3d88b2d3"
   ],
   "sprite": {
     "join": [
@@ -50,22 +51,22 @@
     ],
     "music_lobby": [
       19539,
-      15000,
+      67663,
       true
     ],
     "music_round": [
-      34839,
-      30000,
+      87502,
+      11163,
       true
     ],
     "music_intense": [
-      65139,
+      98965,
       16000,
       true
     ],
     "music_analysis": [
-      81439,
-      32000,
+      115265,
+      29115,
       true
     ]
   }
