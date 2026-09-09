@@ -26,6 +26,10 @@ vi.mock('howler', () => {
         stop(id) {
             this.stopped.push(id);
         }
+        seek(pos, id) {
+            if (id === undefined) return 18 + 21.25; // file time: 21.25 s into the round loop, which starts at 18 s
+            this.seeks = { ...(this.seeks ?? {}), [id]: pos };
+        }
     }
     return { Howl, Howler: { ctx: { state: 'suspended', resume: vi.fn() } } };
 });
@@ -63,6 +67,8 @@ describe('useAudio', () => {
         audio.intensity(true);
         audio.intensity(true);
         expect(played.at(-1)).toBe('music_intense');
+        // Started at the round loop's bar position (21.25 s in, modulo the layer's 16 s) in file time: layer start 49 s + 5.25.
+        expect(Object.values(audio._howl().seeks)).toEqual([49 + 5.25]);
         expect(audio._state()).toMatchObject({ musicName: 'round', hasMusic: true, hasIntense: true });
         audio.intensity(false);
         expect(audio._state().hasIntense).toBe(false);

@@ -141,19 +141,32 @@ const api = {
             musicId = play(MUSIC[name], 0);
             if (musicId !== null) howl.fade(0, MUSIC_VOLUME, FADE_MS, musicId);
         },
-        /** The round loop's drum layer: on for decisions 8-10, off otherwise. */
+        /**
+         * The round loop's drum layer: on for decisions 8-10, off otherwise. It starts at the
+         * same bar position as the round loop, so the kicks line up (the layer's length is a
+         * whole number of bars that divides the loop's).
+         */
         intensity(on) {
             if (musicName !== 'round' || !howl) return;
             if (on && intenseId === null) {
                 intenseId = play(INTENSE, 0);
-                if (intenseId !== null) howl.fade(0, MUSIC_VOLUME, FADE_MS, intenseId);
+                if (intenseId !== null) {
+                    // Howler positions are file time: subtract the round loop's own start.
+                    const roundStart = (sprite[MUSIC.round]?.[0] ?? 0) / 1000;
+                    const layerStart = (sprite[INTENSE]?.[0] ?? 0) / 1000;
+                    const length = (sprite[INTENSE]?.[1] ?? 0) / 1000;
+                    const into = Math.max(0, (Number(howl.seek(musicId)) || roundStart) - roundStart);
+                    if (length > 0) howl.seek(layerStart + (into % length), intenseId);
+                    howl.fade(0, MUSIC_VOLUME, FADE_MS, intenseId);
+                }
             } else if (!on && intenseId !== null) {
                 fadeOut(intenseId);
                 intenseId = null;
             }
         },
         /** For tests and the console. */
-        _state: () => ({ client, musicName, hasMusic: musicId !== null, hasIntense: intenseId !== null, sprites: Object.keys(sprite) }),
+        _howl: () => howl,
+    _state: () => ({ client, musicName, hasMusic: musicId !== null, hasIntense: intenseId !== null, sprites: Object.keys(sprite) }),
 };
 
 if (typeof window !== 'undefined') {

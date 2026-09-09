@@ -34,6 +34,8 @@ final class Payloads
             'display_name' => $codename ? (string) $pairing->{"codename_$other"} : $player->username,
             'is_bot' => (bool) $player->is_bot,
             'is_codename' => $codename,
+            // A codename hides the person, so it hides their look too.
+            'avatar' => $codename ? null : $player->avatar(),
         ];
     }
 

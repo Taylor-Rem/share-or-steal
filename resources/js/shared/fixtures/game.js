@@ -18,14 +18,14 @@ const DURATIONS = {
 };
 const PAYOFFS = { share: { share: 3, steal: 0 }, steal: { share: 5, steal: 1 } };
 
-export const ME = { id: 1, username: 'You', is_bot: false };
+export const ME = { id: 1, username: 'You', is_bot: false, avatar: { emoji: '🦊', color: 'amber' } };
 export const ROOM = [
     ME,
-    { id: 2, username: 'Priya', is_bot: false },
-    { id: 3, username: 'Sam', is_bot: false },
-    { id: 4, username: 'Jordan', is_bot: false },
-    { id: 5, username: 'Alex', is_bot: false },
-    { id: 6, username: 'Morgan Fitzgerald-Whitcombe', is_bot: false },
+    { id: 2, username: 'Priya', is_bot: false, avatar: { emoji: '🐙', color: 'violet' } },
+    { id: 3, username: 'Sam', is_bot: false, avatar: { emoji: '🚀', color: 'sky' } },
+    { id: 4, username: 'Jordan', is_bot: false, avatar: { emoji: '🐸', color: 'lime' } },
+    { id: 5, username: 'Alex', is_bot: false, avatar: null },
+    { id: 6, username: 'Morgan Fitzgerald-Whitcombe', is_bot: false, avatar: { emoji: '🎸', color: 'rose' } },
 ];
 const CODENAMES = { 1: 'Silver Otter', 2: 'Blue Heron', 3: 'Amber Fox', 4: 'Jade Wren', 5: 'Cobalt Lynx', 6: 'Crimson Moth' };
 const ARCHETYPES = {
@@ -84,7 +84,7 @@ export function buildFixture({ code = 'DEMO', fast = false, rounds = 2, decision
     let pairings = [];
 
     const display = (id) => (anonymous ? CODENAMES[id] : players[id].username);
-    const partnerShape = (id) => ({ id, display_name: display(id), is_bot: false, is_codename: anonymous });
+    const partnerShape = (id) => ({ id, display_name: display(id), is_bot: false, is_codename: anonymous, avatar: anonymous ? null : players[id].avatar });
 
     const state = (now, over = {}) => ({
         code,

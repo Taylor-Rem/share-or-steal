@@ -242,11 +242,15 @@ broadcast immediately (`ShouldBroadcastNow`), never via a queue.
 ## 8. Shared shapes
 
 ```ts
-type PublicPlayer = { id: number; username: string; is_bot: boolean };
+// `avatar` is the look picked on the join screen (an emoji and a colour key from
+// config('game.avatars')), The Machine's fixed one for the bot, or null.
+type Avatar = { emoji: string; color: string };
+type PublicPlayer = { id: number; username: string; is_bot: boolean; avatar: Avatar | null };
 
 // What a phone sees its partner as. In an anonymous round `display_name` is the codename
 // and `is_codename` is true; `id` is still present so the phone can key state, but never shown.
-type Partner = { id: number; display_name: string; is_bot: boolean; is_codename: boolean };
+// A codename hides the avatar too.
+type Partner = { id: number; display_name: string; is_bot: boolean; is_codename: boolean; avatar: Avatar | null };
 
 type Choice = "share" | "steal";
 
@@ -462,13 +466,15 @@ the end, `null` otherwise, so a screen that reloads mid-analysis can draw what i
 **`POST /api/sessions/{code}/join`** — no identity required; this is what creates it.
 ```json
 // request
-{ "username": "Jordan", "device_token": "5c0a…" }
+{ "username": "Jordan", "device_token": "5c0a…", "avatar": { "emoji": "🦊", "color": "amber" } }
 // 201 response
 { "server_time": "…", "state": State, "player": PublicPlayer, "is_admitted": true }
 ```
 Rules: `username` 1–24 characters after trimming, unique within the session
-case-insensitively (`422` `username taken`); a second join with the same `device_token`
-returns `200` and the existing player (this is also how "remembers you" works); after
+case-insensitively (`422` `username taken`); `avatar` optional, each half from the
+configured lists (`422` otherwise); a second join with the same `device_token`
+returns `200` and the existing player (this is also how "remembers you" works) and
+updates the avatar if one is sent; after
 `start` the player is created with `is_admitted: false` and the response says so;
 `409` `session_full` at `max_players`; `409` `session_finished` after the end.
 Broadcasts `player.joined`.
