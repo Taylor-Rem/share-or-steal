@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AvatarController;
 use App\Http\Controllers\Api\ChoiceController;
 use App\Http\Controllers\Api\Director\LoginController;
 use App\Http\Controllers\Api\Director\PlayerCommandController;
@@ -29,6 +30,7 @@ Route::post('/sessions/{code}/join', JoinController::class)->name('api.session.j
 Route::middleware('player:any')->group(function () {
     Route::get('/sessions/{code}/me', MeController::class)->name('api.session.me');
     Route::post('/sessions/{code}/choice', ChoiceController::class)->name('api.session.choice');
+    Route::post('/sessions/{code}/avatar', AvatarController::class)->name('api.session.avatar');
 });
 
 Route::post('/director/login', LoginController::class)->name('api.director.login');

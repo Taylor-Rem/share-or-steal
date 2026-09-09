@@ -136,6 +136,20 @@ export const useGameStore = defineStore('game', {
             }
         },
 
+        /** POST avatar from the waiting room. In fixture mode the change stays on the phone. */
+        async setAvatar(avatar) {
+            if (!this.me) return;
+            if (this._fixture) {
+                this.me = { ...this.me, avatar };
+                this.players = this.players.map((p) => (p.id === this.me.id ? this.me : p));
+                return;
+            }
+            const { data } = await this._api.post(`/sessions/${this.code}/avatar`, avatar);
+            this._clock.sync(data.server_time);
+            this.me = data.player;
+            this.players = this.players.map((p) => (p.id === data.player.id ? data.player : p));
+        },
+
         async loadMe() {
             const { data } = await this._api.get(`/sessions/${this.code}/me`);
             this.applyMe(data);
@@ -248,6 +262,10 @@ export const useGameStore = defineStore('game', {
             switch (event) {
                 case 'player.joined':
                     if (payload.player && !this.players.some((p) => p.id === payload.player.id)) this.players.push(payload.player);
+                    break;
+                case 'player.updated':
+                    this.players = this.players.map((p) => (p.id === payload.player.id ? payload.player : p));
+                    if (this.me && payload.player.id === this.me.id) this.me = payload.player;
                     break;
                 case 'player.left':
                     this.players = this.players.filter((p) => p.id !== payload.player_id);

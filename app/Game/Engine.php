@@ -16,6 +16,7 @@ use App\Events\GameStarted;
 use App\Events\PairingRevealed;
 use App\Events\PlayerJoined;
 use App\Events\PlayerLeft;
+use App\Events\PlayerUpdated;
 use App\Events\RoundSummary;
 use App\Events\ScreenReload;
 use App\Events\SessionEnded;
@@ -178,6 +179,26 @@ class Engine
         });
 
         return ['session' => $session, 'player' => $player, 'created' => $created];
+    }
+
+    /**
+     * POST avatar: change a player's look. The room hears about it unless it is anonymous.
+     *
+     * @param  array{emoji: string, color: string}  $avatar
+     */
+    public function setAvatar(GameSession $session, Player $player, array $avatar): Player
+    {
+        $this->transition($session, function (GameSession $s) use ($player, $avatar) {
+            $player->refresh();
+            $player->forceFill(['avatar_emoji' => $avatar['emoji'], 'avatar_color' => $avatar['color'], 'last_seen_at' => now()])->save();
+
+            if (! $s->isAnonymous() && $player->isActive()) {
+                $this->emit(new PlayerUpdated($s, ['player' => $player->toPublicArray()]));
+            }
+            $this->emit(new DirectorPlayerUpdated($s, $player->toDirectorUpdateArray()));
+        });
+
+        return $player;
     }
 
     /**
