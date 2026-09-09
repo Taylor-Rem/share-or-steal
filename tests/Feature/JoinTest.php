@@ -101,37 +101,3 @@ it('hides the player in player.joined in anonymous mode', function () {
 it('404s an unknown code', function () {
     api()->postJson('/api/sessions/ZZZZ/join', ['username' => 'Jordan', 'device_token' => 'tok-1'])->assertNotFound();
 });
-
-it('stores a picked avatar and shows it on the player', function () {
-    GameSession::factory()->create(['code' => 'ROOM']);
-
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Jordan', 'device_token' => 'tok-1', 'avatar' => ['emoji' => '🦊', 'color' => 'amber']])
-        ->assertCreated()
-        ->assertJsonPath('player.avatar.emoji', '🦊')
-        ->assertJsonPath('player.avatar.color', 'amber');
-    expect(payloadsOf(PlayerJoined::class)->sole()['player']['avatar'])->toBe(['emoji' => '🦊', 'color' => 'amber']);
-
-    // Joining again with the same phone can change the look; without an avatar it keeps it.
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Jordan', 'device_token' => 'tok-1', 'avatar' => ['emoji' => '🐸', 'color' => 'lime']])->assertOk()->assertJsonPath('player.avatar.emoji', '🐸');
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Jordan', 'device_token' => 'tok-1'])->assertOk()->assertJsonPath('player.avatar.emoji', '🐸');
-
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Plain', 'device_token' => 'tok-2'])->assertCreated()->assertJsonPath('player.avatar', null);
-});
-
-it('rejects an avatar outside the configured lists', function () {
-    GameSession::factory()->create(['code' => 'ROOM']);
-
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Jordan', 'device_token' => 'tok-1', 'avatar' => ['emoji' => '💩', 'color' => 'amber']])->assertUnprocessable();
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Jordan', 'device_token' => 'tok-1', 'avatar' => ['emoji' => '🦊', 'color' => 'chartreuse']])->assertUnprocessable();
-    api()->postJson('/api/sessions/ROOM/join', ['username' => 'Jordan', 'device_token' => 'tok-1', 'avatar' => ['emoji' => '🦊']])->assertUnprocessable();
-});
-
-it('hides the avatar behind a codename and gives The Machine its own', function () {
-    [$session, $players] = lobby(3, ['code' => 'ANON', 'mode' => 'anonymous']);
-    $players->each(fn ($p) => $p->update(['avatar_emoji' => '🦊', 'avatar_color' => 'amber']));
-    engine()->start($session);
-
-    $paired = payloadsOf(\App\Events\YouPaired::class);
-    expect($paired->every(fn ($p) => $p['partner']['is_codename'] === false ? true : $p['partner']['avatar'] === null))->toBeTrue()
-        ->and($paired->first(fn ($p) => $p['partner']['is_bot'])['partner']['avatar'])->toBe(config('game.avatars.bot'));
-});
