@@ -3,6 +3,7 @@ import { computed, onScopeDispose, ref } from 'vue';
 import { useGameStore } from '../../shared/stores/game';
 import { age, sortPlayers } from '../logic';
 import ConfirmButton from './ConfirmButton.vue';
+import Avatar from '../../shared/Avatar.vue';
 
 const props = defineProps({ busyId: { type: Number, default: null }, nudgeAt: { type: Number, default: 3 } });
 const emit = defineEmits(['admit', 'kick']);
@@ -29,6 +30,7 @@ const rows = computed(() => sortPlayers(Object.values(store.directorPlayers)));
                 class="flex items-center gap-3 rounded-xl bg-slate-900 px-3 py-2"
                 :class="{ 'opacity-50': p.kicked, 'ring-1 ring-amber-400/60': !p.is_admitted && !p.kicked }"
             >
+                <Avatar :avatar="p.avatar" :name="p.username" :size="2" />
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center gap-1.5">
                         <span class="truncate font-semibold">{{ p.username }}</span>

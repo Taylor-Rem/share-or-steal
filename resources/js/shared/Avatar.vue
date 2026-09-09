@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { SWATCHES } from './avatars';
 
 /**
  * A player's picked look: an emoji on a coloured disc. `size` is the disc in rem.
@@ -11,17 +12,6 @@ const props = defineProps({
     size: { type: Number, default: 2.5 },
 });
 
-export const SWATCHES = {
-    rose: 'bg-rose-400',
-    orange: 'bg-orange-400',
-    amber: 'bg-amber-300',
-    lime: 'bg-lime-400',
-    emerald: 'bg-emerald-400',
-    sky: 'bg-sky-400',
-    violet: 'bg-violet-400',
-    pink: 'bg-pink-400',
-    slate: 'bg-slate-500',
-};
 
 const cls = computed(() => (props.avatar ? SWATCHES[props.avatar.color] ?? 'bg-slate-600' : 'bg-slate-700'));
 </script>

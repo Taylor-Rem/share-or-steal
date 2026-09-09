@@ -3,8 +3,8 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useGameStore } from '../../shared/stores/game';
 import { deviceToken, recall, remember } from '../../shared/device';
-import Avatar, { SWATCHES } from '../../shared/Avatar.vue';
-import { AVATAR_COLORS, AVATAR_EMOJI } from '../../shared/avatars';
+import Avatar from '../../shared/Avatar.vue';
+import { AVATAR_COLORS, AVATAR_EMOJI, SWATCHES } from '../../shared/avatars';
 import { useAudio } from '../../shared/audio';
 import { vibrate, BUZZ } from '../../shared/haptics';
 

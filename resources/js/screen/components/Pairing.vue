@@ -4,6 +4,7 @@ import { useGameStore } from '../../shared/stores/game';
 import { useCountdown } from '../../shared/useCountdown';
 import { from, dur } from '../anim';
 import { clip } from '../logic';
+import Avatar from '../../shared/Avatar.vue';
 
 const store = useGameStore();
 const anonymous = computed(() => store.state?.mode === 'anonymous');
@@ -32,9 +33,9 @@ onMounted(() => {
         </div>
         <div v-else ref="grid" class="mt-10 grid flex-1 content-start gap-4" :class="store.pairs.length > 8 ? 'grid-cols-3' : 'grid-cols-2'">
             <div v-for="(pair, i) in store.pairs" :key="i" class="flex items-center justify-between gap-4 rounded-3xl bg-slate-900 px-8 py-5" :class="store.pairs.length > 8 ? 'text-3xl' : 'text-4xl'">
-                <span class="min-w-0 flex-1 truncate font-bold" :title="pair.a.username">{{ clip(pair.a.username, 16) }}<span v-if="pair.a.is_bot" class="ml-2 rounded bg-slate-700 px-2 text-base uppercase text-slate-300">bot</span></span>
+                <span class="flex min-w-0 flex-1 items-center gap-3 font-bold"><Avatar :avatar="pair.a.avatar" :name="pair.a.username" :size="store.pairs.length > 8 ? 2.5 : 3" /><span class="truncate" :title="pair.a.username">{{ clip(pair.a.username, 14) }}</span><span v-if="pair.a.is_bot" class="rounded bg-slate-700 px-2 text-base uppercase text-slate-300">bot</span></span>
                 <span class="text-slate-500">vs</span>
-                <span class="min-w-0 flex-1 truncate text-right font-bold" :title="pair.b.username">{{ clip(pair.b.username, 16) }}<span v-if="pair.b.is_bot" class="ml-2 rounded bg-slate-700 px-2 text-base uppercase text-slate-300">bot</span></span>
+                <span class="flex min-w-0 flex-1 items-center justify-end gap-3 text-right font-bold"><span v-if="pair.b.is_bot" class="rounded bg-slate-700 px-2 text-base uppercase text-slate-300">bot</span><span class="truncate" :title="pair.b.username">{{ clip(pair.b.username, 14) }}</span><Avatar :avatar="pair.b.avatar" :name="pair.b.username" :size="store.pairs.length > 8 ? 2.5 : 3" /></span>
             </div>
         </div>
     </main>
