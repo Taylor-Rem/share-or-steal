@@ -3,6 +3,7 @@
 use App\Enums\SessionStatus;
 use App\Events\DirectorPlayerUpdated;
 use App\Events\PlayerJoined;
+use App\Events\YouPaired;
 use App\Models\GameSession;
 use App\Models\Player;
 
@@ -131,7 +132,7 @@ it('hides the avatar behind a codename and gives The Machine its own', function 
     $players->each(fn ($p) => $p->update(['avatar_emoji' => '🦊', 'avatar_color' => 'amber']));
     engine()->start($session);
 
-    $paired = payloadsOf(\App\Events\YouPaired::class);
+    $paired = payloadsOf(YouPaired::class);
     expect($paired->every(fn ($p) => $p['partner']['is_codename'] === false ? true : $p['partner']['avatar'] === null))->toBeTrue()
         ->and($paired->first(fn ($p) => $p['partner']['is_bot'])['partner']['avatar'])->toBe(config('game.avatars.bot'));
 });
