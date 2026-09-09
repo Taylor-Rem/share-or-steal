@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { useGameStore } from '../../shared/stores/game';
 import { useCountdown } from '../../shared/useCountdown';
-import { gsap, dur } from '../anim';
+import { from, dur } from '../anim';
 import { clip } from '../logic';
 
 const store = useGameStore();
@@ -13,7 +13,7 @@ const grid = ref(null);
 
 onMounted(() => {
     if (!grid.value) return;
-    gsap.from(grid.value.children, { y: 40, opacity: 0, duration: dur(0.6), stagger: dur(0.12), ease: 'power3.out' });
+    from(grid.value.children, { y: 40, opacity: 0, duration: dur(0.6), stagger: dur(0.12), ease: 'power3.out' });
 });
 </script>
 

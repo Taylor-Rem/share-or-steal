@@ -1,6 +1,6 @@
 <script setup>
 import { nextTick, ref, watch } from 'vue';
-import { gsap, dur } from '../anim';
+import { from, dur } from '../anim';
 
 /** The moments feed: newest at the top, each new item sliding in. */
 const props = defineProps({ items: { type: Array, required: true } });
@@ -18,7 +18,7 @@ watch(
     async () => {
         await nextTick();
         const fresh = [...(list.value?.children ?? [])].filter((el) => el.dataset.fresh === '1');
-        if (fresh.length) gsap.from(fresh, { x: 60, opacity: 0, duration: dur(0.45), stagger: dur(0.08), ease: 'power3.out' });
+        if (fresh.length) from(fresh, { x: 60, opacity: 0, duration: dur(0.45), stagger: dur(0.08), ease: 'power3.out' });
     },
 );
 </script>

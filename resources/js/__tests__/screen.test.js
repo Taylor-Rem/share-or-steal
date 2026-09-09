@@ -7,8 +7,9 @@ describe('screen logic', () => {
         const r1 = { round: 1, decision: 1, moments: [{ type: 'betrayal', text: 'A stole from B', player_ids: [1, 2] }, { type: 'mutual_steal', text: 'C and D both stole', player_ids: [3, 4] }] };
         const r2 = { round: 1, decision: 2, moments: [{ type: 'comeback', text: 'B came back against A', player_ids: [2, 1] }] };
         let feed = pushMoments([], r1);
+        expect(feed.map((m) => m.key)).toEqual(['1-1-0', '1-1-1']);
         feed = pushMoments(feed, r2, 2);
-        expect(feed.map((m) => m.key)).toEqual(['1-2-0', '1-1-1']);
+        expect(feed.map((m) => m.key)).toEqual(['1-2-0', '1-1-0']);
         expect(pushMoments(feed, { round: 1, decision: 3, moments: [] })).toBe(feed);
     });
 

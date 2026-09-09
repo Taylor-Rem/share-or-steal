@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { useGameStore } from '../../shared/stores/game';
 import { useCountdown } from '../../shared/useCountdown';
-import { gsap, dur } from '../anim';
+import { from, dur } from '../anim';
 import { pct } from '../logic';
 import Leaderboard from './Leaderboard.vue';
 
@@ -14,7 +14,7 @@ const { seconds } = useCountdown(store.clock, deadline);
 const side = ref(null);
 
 onMounted(() => {
-    if (side.value) gsap.from(side.value.children, { x: 60, opacity: 0, duration: dur(0.7), stagger: dur(0.2), delay: dur(0.2), ease: 'power3.out' });
+    if (side.value) from(side.value.children, { x: 60, opacity: 0, duration: dur(0.7), stagger: dur(0.2), delay: dur(0.2), ease: 'power3.out' });
 });
 </script>
 

@@ -18,4 +18,9 @@ export function timeline(vars = {}) {
     return tl;
 }
 
+/** `gsap.from` with the same two rules; use this instead of gsap.from in components. */
+export function from(targets, vars) {
+    return timeline().from(targets, vars);
+}
+
 export { gsap };

@@ -154,6 +154,12 @@ to make the script phones-only, so you run the game from the director panel your
 
 ---
 
+## Rehearsal and game day
+
+`docs/REHEARSAL.md` is the run sheet, the feedback form and the retuning steps;
+`docs/GAME-DAY.md` is the morning-of checklist, the timing budget, the backup plans and the
+tear-down. `php artisan game:export CODE` snapshots a session's data for tuning.
+
 ## Project layout
 
 ```

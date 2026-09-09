@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import QRCode from 'qrcode';
 import { useGameStore } from '../../shared/stores/game';
-import { gsap, dur } from '../anim';
+import { from, dur } from '../anim';
 import { clip } from '../logic';
 
 const store = useGameStore();
@@ -27,7 +27,7 @@ watch(
     async () => {
         await Promise.resolve();
         const last = list.value?.lastElementChild;
-        if (last) gsap.from(last, { scale: 0.3, opacity: 0, duration: dur(0.5), ease: 'back.out(2)' });
+        if (last) from(last, { scale: 0.3, opacity: 0, duration: dur(0.5), ease: 'back.out(2)' });
     },
 );
 </script>
