@@ -64,7 +64,8 @@
       "src": "freesound/drums-gowers-202537.mp3",
       "loop": true,
       "gain": -5,
-      "tempo": 1.228571
+      "tempo": 0.61286,
+      "duration": 11.163
     },
     "music_analysis": {
       "src": "freesound/analysis-sergequadrado-786249.mp3",

@@ -38,6 +38,7 @@ for (const client of clients) {
         if (cue.start) filters.push(`atrim=start=${cue.start}`, 'asetpts=PTS-STARTPTS');
         if (cue.tempo) filters.push(`atempo=${cue.tempo}`); // time-stretch without pitch change (0.5-2.0)
         if (cue.duration && !cue.loop) filters.push(`atrim=end=${cue.duration}`, `afade=t=out:st=${Math.max(0, cue.duration - 0.15)}:d=0.15`);
+        if (cue.duration && cue.loop) filters.push(`atrim=end=${cue.duration}`); // a loop cut to an exact bar count, no fade
         filters.push(cue.loop ? 'loudnorm=I=-20:TP=-1.5:LRA=11' : 'loudnorm=I=-16:TP=-1.0:LRA=9');
         if (cue.gain) filters.push(`volume=${cue.gain}dB`);
         ffmpeg(['-i', src, '-af', filters.join(','), '-ar', String(RATE), '-ac', '2', out]);
