@@ -9,6 +9,7 @@ use App\Events\SessionPaused;
 use App\Events\SessionResumed;
 use App\Events\YouAdmitted;
 use App\Events\YouKicked;
+use App\Events\YouRevealed;
 use App\Models\Decision;
 use App\Models\GameSession;
 
@@ -220,4 +221,19 @@ it('serves the computed analysis', function () {
         ->assertJsonPath('stats.0.archetype.key', 'pragmatist')
         ->assertJsonPath('beats.0.type', 'room_share_rate')
         ->assertJsonStructure(['stats' => [['player', 'total_points', 'rank', 'share_rate', 'archetype']], 'awards', 'beats']);
+});
+
+it('lets one player start alone against The Machine', function () {
+    [$session, $players] = lobby(1, ['code' => 'SOLO', 'rounds_count' => 1, 'decisions_per_round' => 2]);
+
+    asDirector()->postJson('/api/director/sessions/SOLO/start')->assertOk()->assertJsonPath('state.status', 'pairing');
+    expect($session->players()->where('is_bot', true)->count())->toBe(1);
+
+    tickUntil($session, SessionStatus::Deciding);
+    choose($players[0], $session, 'steal')->assertOk();
+    tickUntil($session, SessionStatus::Analysis);
+
+    $reveal = payloadsOf(YouRevealed::class)->first();
+    expect($reveal['partner']['choice'])->toBe('share') // The Machine shares first...
+        ->and(payloadsOf(YouRevealed::class)->last()['partner']['choice'])->toBe('steal'); // ...then copies you
 });

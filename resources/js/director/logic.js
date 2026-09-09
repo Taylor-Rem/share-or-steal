@@ -3,7 +3,7 @@
  * how old a timestamp is. No Vue, no network, so Vitest can pin them down.
  */
 
-export const MIN_PLAYERS = 2;
+export const MIN_PLAYERS = 1; // matches config('game.min_players'): one human plays The Machine
 
 /** The primary action for a `state` (CONTRACT.md § 5). `{ action, label, disabled, confirm, hint }` or null. */
 export function primaryAction(state) {
@@ -13,7 +13,7 @@ export function primaryAction(state) {
     if (state.paused) return { action: 'resume', label: 'Resume', confirm: false, disabled: false };
     if (state.status === 'lobby') {
         const enough = state.player_count >= MIN_PLAYERS;
-        return { action: 'start', label: 'Start game', confirm: true, disabled: !enough, hint: enough ? `${state.player_count} players` : `Need at least ${MIN_PLAYERS} players` };
+        return { action: 'start', label: 'Start game', confirm: true, disabled: !enough, hint: enough ? `${state.player_count} ${state.player_count === 1 ? 'player, plus The Machine' : 'players'}` : `Need at least ${MIN_PLAYERS} player` };
     }
     if (timed) return { action: 'pause', label: 'Pause', confirm: false, disabled: false };
     if (state.status === 'analysis') {

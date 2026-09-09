@@ -22,7 +22,7 @@ return [
     'rounds' => 5,
     'decisions_per_round' => 10,
     'max_players' => 30,
-    'min_players' => 2,
+    'min_players' => 1,  // one human starts an odd room and plays The Machine, which is how you test alone
 
     /*
     | Clocks, in milliseconds. `normal` is game day; `fast` is a session-level

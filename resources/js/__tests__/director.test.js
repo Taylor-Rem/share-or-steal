@@ -10,8 +10,8 @@ const state = (over = {}) => ({
 
 describe('primaryAction', () => {
     it('starts from the lobby only with enough players', () => {
-        expect(primaryAction(state({ player_count: 1 }))).toMatchObject({ action: 'start', disabled: true });
-        expect(primaryAction(state({ player_count: 2 }))).toMatchObject({ action: 'start', disabled: false, confirm: true });
+        expect(primaryAction(state({ player_count: 0 }))).toMatchObject({ action: 'start', disabled: true });
+        expect(primaryAction(state({ player_count: 1 }))).toMatchObject({ action: 'start', disabled: false, confirm: true, hint: '1 player, plus The Machine' });
     });
     it('pauses a timed phase and resumes a paused one', () => {
         expect(primaryAction(state({ status: 'deciding', round: 1, decision: 3 }))).toMatchObject({ action: 'pause' });
