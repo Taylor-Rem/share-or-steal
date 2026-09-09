@@ -11,7 +11,7 @@ const store = useGameStore();
 // Something to do while the room fills: pick your look. Every tap is saved at once and
 // the chip on the big screen changes with it.
 const mine = computed(() => store.me?.avatar ?? null);
-const picking = ref(!mine.value); // open until "done"; the chip reopens it
+const picking = ref(true); // always open on arrival, even with last time's look; "done" closes it, the chip reopens it
 const saving = ref(false);
 const showPicker = computed(() => picking.value);
 async function pick(part, value) {
@@ -43,7 +43,7 @@ const anonymous = computed(() => store.state?.mode === 'anonymous');
 
         <section v-if="showPicker" class="sos-rise w-full max-w-sm rounded-2xl bg-slate-900 p-4" aria-label="Pick your look">
             <p class="mb-3 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400">
-                <span>{{ mine ? 'Change your look' : 'Pick your look while you wait' }}</span>
+                <span>{{ mine ? 'Your look · change it if you like' : 'Pick your look while you wait' }}</span>
                 <span v-if="saving" class="text-emerald-300">saving…</span>
                 <button v-else-if="mine" type="button" class="rounded-lg bg-slate-800 px-3 py-1 text-emerald-300" @click="picking = false">done</button>
             </p>
