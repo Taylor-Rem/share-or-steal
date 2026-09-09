@@ -34,6 +34,7 @@ const audio = useAudio();
 const loading = ref(true);
 const failure = ref(null);
 let fixture = null;
+audio.use('phone');
 
 onMounted(async () => {
     const code = props.code.toUpperCase();

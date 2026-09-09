@@ -26,7 +26,7 @@ onMounted(() => {
     cols.forEach((col, i) => {
         tl.from(col, { scaleY: 0, transformOrigin: 'bottom center', duration: dur(0.9), ease: 'power3.out' }, i === 0 ? 0.3 : '-=0.3')
             .from(col.querySelector('[data-name]'), { opacity: 0, y: 20, duration: dur(0.4) }, '-=0.4');
-        if (col.dataset.place === '1') tl.add(() => audio.cue('award'), '-=0.9');
+        if (col.dataset.place === '1') tl.add(() => audio.cue('podium'), '-=0.9');
     });
 });
 </script>

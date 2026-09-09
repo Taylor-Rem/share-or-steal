@@ -1,0 +1,2118 @@
+{
+    "code": "QJTL",
+    "ended": "completed",
+    "options": {
+        "url": "http://steal-or-share.test",
+        "players": 30,
+        "anonymous": false,
+        "fast": true,
+        "seed": 4
+    },
+    "state": {
+        "code": "QJTL",
+        "mode": "normal",
+        "status": "finished",
+        "fast_mode": true,
+        "paused": false,
+        "rounds_count": 5,
+        "decisions_per_round": 10,
+        "round": 5,
+        "decision": null,
+        "analysis_beat": 43,
+        "analysis_beat_count": 44,
+        "phase_ends_at": null,
+        "player_count": 30
+    },
+    "events": {
+        "player.joined": 30,
+        "director.player_updated": 184,
+        "game.started": 1,
+        "pairing.revealed": 5,
+        "decision.opened": 50,
+        "decision.revealed": 50,
+        "director.warning": 48,
+        "round.summary": 5,
+        "analysis.started": 1,
+        "analysis.beat": 44,
+        "session.ended": 1
+    },
+    "stats": [
+        {
+            "player": {
+                "id": 227,
+                "username": "wall_2",
+                "is_bot": false
+            },
+            "total_points": 174,
+            "rank": 1,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0,
+            "opening_move": 0,
+            "retaliation": 1,
+            "forgiveness": 0,
+            "betrayals": 0,
+            "exploitation": 29,
+            "exploitation_rate": 0.58,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 0.38,
+            "sucker_count": 0,
+            "times_stolen_from": 19,
+            "avg_response_ms": 444,
+            "archetype": {
+                "key": "wall",
+                "label": "The Wall",
+                "blurb": "You never let anyone in, and never got burned either."
+            }
+        },
+        {
+            "player": {
+                "id": 240,
+                "username": "opportunist_1",
+                "is_bot": false
+            },
+            "total_points": 165,
+            "rank": 2,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.36,
+            "opening_move": 1,
+            "retaliation": 0,
+            "forgiveness": 1,
+            "betrayals": 7,
+            "exploitation": 32,
+            "exploitation_rate": 1,
+            "endgame_shift": 0.05,
+            "predictability": 1,
+            "partner_yield": 1.6,
+            "sucker_count": 11,
+            "times_stolen_from": 15,
+            "avg_response_ms": 436,
+            "archetype": {
+                "key": "opportunist",
+                "label": "The Opportunist",
+                "blurb": "You shared until you smelled a sharer, then took the five."
+            }
+        },
+        {
+            "player": {
+                "id": 230,
+                "username": "wall_1",
+                "is_bot": false
+            },
+            "total_points": 150,
+            "rank": 3,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0,
+            "opening_move": 0,
+            "retaliation": 1,
+            "forgiveness": 0,
+            "betrayals": 0,
+            "exploitation": 23,
+            "exploitation_rate": 0.46,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 0.5,
+            "sucker_count": 0,
+            "times_stolen_from": 25,
+            "avg_response_ms": 434,
+            "archetype": {
+                "key": "wall",
+                "label": "The Wall",
+                "blurb": "You never let anyone in, and never got burned either."
+            }
+        },
+        {
+            "player": {
+                "id": 235,
+                "username": "grudge_2",
+                "is_bot": false
+            },
+            "total_points": 150,
+            "rank": 3,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 1,
+            "opening_move": 1,
+            "retaliation": null,
+            "forgiveness": null,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": null,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 3,
+            "sucker_count": 0,
+            "times_stolen_from": 0,
+            "avg_response_ms": 431,
+            "archetype": {
+                "key": "saint",
+                "label": "The Saint",
+                "blurb": "You shared no matter what it cost you."
+            }
+        },
+        {
+            "player": {
+                "id": 232,
+                "username": "mirror_3",
+                "is_bot": false
+            },
+            "total_points": 148,
+            "rank": 5,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.96,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 1,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": 0.05,
+            "predictability": 1,
+            "partner_yield": 2.96,
+            "sucker_count": 2,
+            "times_stolen_from": 2,
+            "avg_response_ms": 441,
+            "archetype": {
+                "key": "saint",
+                "label": "The Saint",
+                "blurb": "You shared no matter what it cost you."
+            }
+        },
+        {
+            "player": {
+                "id": 251,
+                "username": "sleeper_2",
+                "is_bot": false
+            },
+            "total_points": 147,
+            "rank": 6,
+            "decisions_count": 50,
+            "timeouts": 50,
+            "share_rate": null,
+            "opening_move": null,
+            "retaliation": null,
+            "forgiveness": null,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": null,
+            "endgame_shift": null,
+            "predictability": null,
+            "partner_yield": 3.04,
+            "sucker_count": 0,
+            "times_stolen_from": 1,
+            "avg_response_ms": null,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        },
+        {
+            "player": {
+                "id": 234,
+                "username": "grudge_1",
+                "is_bot": false
+            },
+            "total_points": 145,
+            "rank": 7,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.42,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0,
+            "betrayals": 0,
+            "exploitation": 15,
+            "exploitation_rate": 0.5172,
+            "endgame_shift": -0.4,
+            "predictability": 1,
+            "partner_yield": 1.7,
+            "sucker_count": 5,
+            "times_stolen_from": 17,
+            "avg_response_ms": 450,
+            "archetype": {
+                "key": "grudge",
+                "label": "The Grudge",
+                "blurb": "One strike and they're done."
+            }
+        },
+        {
+            "player": {
+                "id": 233,
+                "username": "mirror_4",
+                "is_bot": false
+            },
+            "total_points": 143,
+            "rank": 8,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.92,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0.5,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": -0.15,
+            "predictability": 1,
+            "partner_yield": 2.96,
+            "sucker_count": 5,
+            "times_stolen_from": 5,
+            "avg_response_ms": 436,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 231,
+                "username": "mirror_2",
+                "is_bot": false
+            },
+            "total_points": 138,
+            "rank": 9,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.9,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0.8,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 2.96,
+            "sucker_count": 6,
+            "times_stolen_from": 7,
+            "avg_response_ms": 441,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 248,
+                "username": "pragmatist_4",
+                "is_bot": false
+            },
+            "total_points": 138,
+            "rank": 9,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.64,
+            "opening_move": 0.6,
+            "retaliation": 0.75,
+            "forgiveness": 0.3333,
+            "betrayals": 5,
+            "exploitation": 7,
+            "exploitation_rate": 0.3889,
+            "endgame_shift": -0.05,
+            "predictability": 0.8222,
+            "partner_yield": 2.26,
+            "sucker_count": 4,
+            "times_stolen_from": 13,
+            "avg_response_ms": 426,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        },
+        {
+            "player": {
+                "id": 242,
+                "username": "opportunist_3",
+                "is_bot": false
+            },
+            "total_points": 136,
+            "rank": 11,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.44,
+            "opening_move": 1,
+            "retaliation": 0,
+            "forgiveness": 1,
+            "betrayals": 12,
+            "exploitation": 28,
+            "exploitation_rate": 1,
+            "endgame_shift": -0.05,
+            "predictability": 1,
+            "partner_yield": 1.92,
+            "sucker_count": 10,
+            "times_stolen_from": 20,
+            "avg_response_ms": 448,
+            "archetype": {
+                "key": "opportunist",
+                "label": "The Opportunist",
+                "blurb": "You shared until you smelled a sharer, then took the five."
+            }
+        },
+        {
+            "player": {
+                "id": 255,
+                "username": "double_tapper_1",
+                "is_bot": false
+            },
+            "total_points": 136,
+            "rank": 11,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.94,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0.3333,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": -0.175,
+            "predictability": 1,
+            "partner_yield": 3.02,
+            "sucker_count": 4,
+            "times_stolen_from": 6,
+            "avg_response_ms": 457,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 252,
+                "username": "ghost_1",
+                "is_bot": false
+            },
+            "total_points": 135,
+            "rank": 13,
+            "decisions_count": 50,
+            "timeouts": 3,
+            "share_rate": 0.8936,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0.8571,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": 0.0081,
+            "predictability": 1,
+            "partner_yield": 3,
+            "sucker_count": 4,
+            "times_stolen_from": 8,
+            "avg_response_ms": 446,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 236,
+                "username": "diplomat_1",
+                "is_bot": false
+            },
+            "total_points": 134,
+            "rank": 14,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.9,
+            "opening_move": 1,
+            "retaliation": 0.8333,
+            "forgiveness": 0.8333,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 2.98,
+            "sucker_count": 6,
+            "times_stolen_from": 8,
+            "avg_response_ms": 423,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 249,
+                "username": "pragmatist_5",
+                "is_bot": false
+            },
+            "total_points": 134,
+            "rank": 14,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.68,
+            "opening_move": 0.8,
+            "retaliation": 0.6364,
+            "forgiveness": 0.6364,
+            "betrayals": 7,
+            "exploitation": 8,
+            "exploitation_rate": 0.5,
+            "endgame_shift": -0.1,
+            "predictability": 0.7333,
+            "partner_yield": 2.48,
+            "sucker_count": 8,
+            "times_stolen_from": 14,
+            "avg_response_ms": 441,
+            "archetype": {
+                "key": "diplomat",
+                "label": "The Diplomat",
+                "blurb": "You got stolen from and came back to the table anyway."
+            }
+        },
+        {
+            "player": {
+                "id": 228,
+                "username": "saint_2",
+                "is_bot": false
+            },
+            "total_points": 132,
+            "rank": 16,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 1,
+            "opening_move": 1,
+            "retaliation": 0,
+            "forgiveness": 1,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": null,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 3.24,
+            "sucker_count": 6,
+            "times_stolen_from": 6,
+            "avg_response_ms": 434,
+            "archetype": {
+                "key": "saint",
+                "label": "The Saint",
+                "blurb": "You shared no matter what it cost you."
+            }
+        },
+        {
+            "player": {
+                "id": 238,
+                "username": "backstabber_1",
+                "is_bot": false
+            },
+            "total_points": 130,
+            "rank": 17,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.8,
+            "opening_move": 1,
+            "retaliation": 0.2222,
+            "forgiveness": 0.7778,
+            "betrayals": 4,
+            "exploitation": 8,
+            "exploitation_rate": 0.8,
+            "endgame_shift": -1,
+            "predictability": 0.8889,
+            "partner_yield": 2.8,
+            "sucker_count": 8,
+            "times_stolen_from": 12,
+            "avg_response_ms": 435,
+            "archetype": {
+                "key": "backstabber",
+                "label": "The Backstabber",
+                "blurb": "Perfect partner right up until it stopped mattering."
+            }
+        },
+        {
+            "player": {
+                "id": 237,
+                "username": "diplomat_2",
+                "is_bot": false
+            },
+            "total_points": 129,
+            "rank": 18,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.9,
+            "opening_move": 1,
+            "retaliation": 0.5556,
+            "forgiveness": 1,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 2.98,
+            "sucker_count": 5,
+            "times_stolen_from": 9,
+            "avg_response_ms": 444,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 245,
+                "username": "pragmatist_1",
+                "is_bot": false
+            },
+            "total_points": 128,
+            "rank": 19,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.72,
+            "opening_move": 0.6,
+            "retaliation": 0.6,
+            "forgiveness": 0.4,
+            "betrayals": 6,
+            "exploitation": 6,
+            "exploitation_rate": 0.4286,
+            "endgame_shift": -0.275,
+            "predictability": 0.8,
+            "partner_yield": 2.56,
+            "sucker_count": 6,
+            "times_stolen_from": 14,
+            "avg_response_ms": 424,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        },
+        {
+            "player": {
+                "id": 243,
+                "username": "wildcard_1",
+                "is_bot": false
+            },
+            "total_points": 127,
+            "rank": 20,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.62,
+            "opening_move": 0.8,
+            "retaliation": 0.4118,
+            "forgiveness": 0.8824,
+            "betrayals": 6,
+            "exploitation": 11,
+            "exploitation_rate": 0.5789,
+            "endgame_shift": 0.1,
+            "predictability": 0.6,
+            "partner_yield": 2.44,
+            "sucker_count": 11,
+            "times_stolen_from": 18,
+            "avg_response_ms": 446,
+            "archetype": {
+                "key": "wildcard",
+                "label": "The Wildcard",
+                "blurb": "Nobody could read you, including maybe you."
+            }
+        },
+        {
+            "player": {
+                "id": 239,
+                "username": "backstabber_2",
+                "is_bot": false
+            },
+            "total_points": 123,
+            "rank": 21,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.8,
+            "opening_move": 1,
+            "retaliation": 0.2727,
+            "forgiveness": 0.7273,
+            "betrayals": 4,
+            "exploitation": 7,
+            "exploitation_rate": 0.7,
+            "endgame_shift": -1,
+            "predictability": 0.8889,
+            "partner_yield": 2.86,
+            "sucker_count": 9,
+            "times_stolen_from": 14,
+            "avg_response_ms": 433,
+            "archetype": {
+                "key": "backstabber",
+                "label": "The Backstabber",
+                "blurb": "Perfect partner right up until it stopped mattering."
+            }
+        },
+        {
+            "player": {
+                "id": 229,
+                "username": "mirror_1",
+                "is_bot": false
+            },
+            "total_points": 119,
+            "rank": 22,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.78,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0.5455,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": 0.025,
+            "predictability": 1,
+            "partner_yield": 2.78,
+            "sucker_count": 7,
+            "times_stolen_from": 15,
+            "avg_response_ms": 428,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 250,
+                "username": "sleeper_1",
+                "is_bot": false
+            },
+            "total_points": 117,
+            "rank": 23,
+            "decisions_count": 50,
+            "timeouts": 50,
+            "share_rate": null,
+            "opening_move": null,
+            "retaliation": null,
+            "forgiveness": null,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": null,
+            "endgame_shift": null,
+            "predictability": null,
+            "partner_yield": 3.44,
+            "sucker_count": 0,
+            "times_stolen_from": 11,
+            "avg_response_ms": null,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        },
+        {
+            "player": {
+                "id": 241,
+                "username": "opportunist_2",
+                "is_bot": false
+            },
+            "total_points": 114,
+            "rank": 24,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.54,
+            "opening_move": 1,
+            "retaliation": 0,
+            "forgiveness": 1,
+            "betrayals": 12,
+            "exploitation": 23,
+            "exploitation_rate": 1,
+            "endgame_shift": -0.05,
+            "predictability": 1,
+            "partner_yield": 2.38,
+            "sucker_count": 14,
+            "times_stolen_from": 24,
+            "avg_response_ms": 429,
+            "archetype": {
+                "key": "opportunist",
+                "label": "The Opportunist",
+                "blurb": "You shared until you smelled a sharer, then took the five."
+            }
+        },
+        {
+            "player": {
+                "id": 247,
+                "username": "pragmatist_3",
+                "is_bot": false
+            },
+            "total_points": 113,
+            "rank": 25,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.5,
+            "opening_move": 0.6,
+            "retaliation": 0.6957,
+            "forgiveness": 0.4783,
+            "betrayals": 5,
+            "exploitation": 7,
+            "exploitation_rate": 0.28,
+            "endgame_shift": -0.375,
+            "predictability": 0.7111,
+            "partner_yield": 2.26,
+            "sucker_count": 13,
+            "times_stolen_from": 25,
+            "avg_response_ms": 431,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        },
+        {
+            "player": {
+                "id": 244,
+                "username": "wildcard_2",
+                "is_bot": false
+            },
+            "total_points": 112,
+            "rank": 26,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.42,
+            "opening_move": 0,
+            "retaliation": 0.5,
+            "forgiveness": 0.7917,
+            "betrayals": 3,
+            "exploitation": 12,
+            "exploitation_rate": 0.4138,
+            "endgame_shift": -0.025,
+            "predictability": 0.6222,
+            "partner_yield": 2.04,
+            "sucker_count": 12,
+            "times_stolen_from": 27,
+            "avg_response_ms": 442,
+            "archetype": {
+                "key": "wildcard",
+                "label": "The Wildcard",
+                "blurb": "Nobody could read you, including maybe you."
+            }
+        },
+        {
+            "player": {
+                "id": 246,
+                "username": "pragmatist_2",
+                "is_bot": false
+            },
+            "total_points": 111,
+            "rank": 27,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.46,
+            "opening_move": 1,
+            "retaliation": 0.8696,
+            "forgiveness": 0.3478,
+            "betrayals": 4,
+            "exploitation": 7,
+            "exploitation_rate": 0.2593,
+            "endgame_shift": 0.05,
+            "predictability": 0.7778,
+            "partner_yield": 2.02,
+            "sucker_count": 7,
+            "times_stolen_from": 25,
+            "avg_response_ms": 424,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        },
+        {
+            "player": {
+                "id": 254,
+                "username": "speedster_1",
+                "is_bot": false
+            },
+            "total_points": 108,
+            "rank": 28,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 0.64,
+            "opening_move": 1,
+            "retaliation": 1,
+            "forgiveness": 0,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": 0,
+            "endgame_shift": -0.05,
+            "predictability": 1,
+            "partner_yield": 2.36,
+            "sucker_count": 2,
+            "times_stolen_from": 20,
+            "avg_response_ms": 382,
+            "archetype": {
+                "key": "mirror",
+                "label": "The Mirror",
+                "blurb": "Tit-for-tat: nice, retaliatory, forgiving, clear. The tournament winner."
+            }
+        },
+        {
+            "player": {
+                "id": 226,
+                "username": "saint_1",
+                "is_bot": false
+            },
+            "total_points": 90,
+            "rank": 29,
+            "decisions_count": 50,
+            "timeouts": 0,
+            "share_rate": 1,
+            "opening_move": 1,
+            "retaliation": 0,
+            "forgiveness": 1,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": null,
+            "endgame_shift": 0,
+            "predictability": 1,
+            "partner_yield": 3.8,
+            "sucker_count": 20,
+            "times_stolen_from": 20,
+            "avg_response_ms": 428,
+            "archetype": {
+                "key": "saint",
+                "label": "The Saint",
+                "blurb": "You shared no matter what it cost you."
+            }
+        },
+        {
+            "player": {
+                "id": 253,
+                "username": "straggler_1",
+                "is_bot": false
+            },
+            "total_points": 36,
+            "rank": 30,
+            "decisions_count": 50,
+            "timeouts": 50,
+            "share_rate": null,
+            "opening_move": null,
+            "retaliation": null,
+            "forgiveness": null,
+            "betrayals": 0,
+            "exploitation": 0,
+            "exploitation_rate": null,
+            "endgame_shift": null,
+            "predictability": null,
+            "partner_yield": 4.52,
+            "sucker_count": 0,
+            "times_stolen_from": 38,
+            "avg_response_ms": null,
+            "archetype": {
+                "key": "pragmatist",
+                "label": "The Pragmatist",
+                "blurb": "You read the room and adjusted. Boring, effective."
+            }
+        }
+    ],
+    "awards": [
+        {
+            "key": "kindest",
+            "label": "Kindest",
+            "description": "Highest share rate.",
+            "winner": {
+                "id": 235,
+                "username": "grudge_2",
+                "is_bot": false
+            },
+            "value": 1,
+            "value_label": "100%",
+            "tie_break": "points"
+        },
+        {
+            "key": "most_forgiving",
+            "label": "Most Forgiving",
+            "description": "Highest forgiveness rate, minimum three times stolen from.",
+            "winner": {
+                "id": 240,
+                "username": "opportunist_1",
+                "is_bot": false
+            },
+            "value": 1,
+            "value_label": "100%",
+            "tie_break": "points"
+        },
+        {
+            "key": "most_ruthless",
+            "label": "Most Ruthless",
+            "description": "Highest steal rate.",
+            "winner": {
+                "id": 227,
+                "username": "wall_2",
+                "is_bot": false
+            },
+            "value": 0,
+            "value_label": "0%",
+            "tie_break": "points"
+        },
+        {
+            "key": "best_partner",
+            "label": "Best Partner",
+            "description": "People who played you walked away richest.",
+            "winner": {
+                "id": 226,
+                "username": "saint_1",
+                "is_bot": false
+            },
+            "value": 3.8,
+            "value_label": "3.8 pts",
+            "tie_break": null
+        },
+        {
+            "key": "most_betrayed",
+            "label": "Most Betrayed",
+            "description": "Shared, and got stolen from, more than anyone.",
+            "winner": {
+                "id": 226,
+                "username": "saint_1",
+                "is_bot": false
+            },
+            "value": 20,
+            "value_label": "20",
+            "tie_break": null
+        },
+        {
+            "key": "cold_blooded",
+            "label": "Cold Blooded",
+            "description": "Most betrayals right after a mutual share.",
+            "winner": {
+                "id": 242,
+                "username": "opportunist_3",
+                "is_bot": false
+            },
+            "value": 12,
+            "value_label": "12",
+            "tie_break": "points"
+        },
+        {
+            "key": "endgame_assassin",
+            "label": "Endgame Assassin",
+            "description": "Most negative endgame shift.",
+            "winner": {
+                "id": 238,
+                "username": "backstabber_1",
+                "is_bot": false
+            },
+            "value": -1,
+            "value_label": "-100%",
+            "tie_break": "points"
+        },
+        {
+            "key": "unreadable",
+            "label": "Unreadable",
+            "description": "Lowest predictability.",
+            "winner": {
+                "id": 243,
+                "username": "wildcard_1",
+                "is_bot": false
+            },
+            "value": 0.6,
+            "value_label": "60%",
+            "tie_break": null
+        },
+        {
+            "key": "fastest_thumb",
+            "label": "Fastest Thumb",
+            "description": "Lowest average decision time.",
+            "winner": {
+                "id": 254,
+                "username": "speedster_1",
+                "is_bot": false
+            },
+            "value": 382,
+            "value_label": "382 ms",
+            "tie_break": null
+        },
+        {
+            "key": "champion",
+            "label": "Champion",
+            "description": "Most total points.",
+            "winner": {
+                "id": 227,
+                "username": "wall_2",
+                "is_bot": false
+            },
+            "value": 174,
+            "value_label": "174 pts",
+            "tie_break": null,
+            "place": 1
+        },
+        {
+            "key": "champion",
+            "label": "Champion",
+            "description": "Most total points.",
+            "winner": {
+                "id": 240,
+                "username": "opportunist_1",
+                "is_bot": false
+            },
+            "value": 165,
+            "value_label": "165 pts",
+            "tie_break": null,
+            "place": 2
+        },
+        {
+            "key": "champion",
+            "label": "Champion",
+            "description": "Most total points.",
+            "winner": {
+                "id": 235,
+                "username": "grudge_2",
+                "is_bot": false
+            },
+            "value": 150,
+            "value_label": "150 pts",
+            "tie_break": "coin_flip",
+            "place": 3
+        }
+    ],
+    "beats": [
+        "room_share_rate",
+        "share_rate_by_decision",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_reveal",
+        "archetype_census",
+        "stat_leaders",
+        "award",
+        "award",
+        "award",
+        "award",
+        "award",
+        "award",
+        "award",
+        "award",
+        "award",
+        "podium"
+    ],
+    "records": {
+        "saint_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 2,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "saint_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "wall_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "wall_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "mirror_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "mirror_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "mirror_3": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "mirror_4": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "grudge_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "grudge_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "diplomat_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "diplomat_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "backstabber_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "backstabber_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "opportunist_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "opportunist_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "opportunist_3": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "wildcard_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "wildcard_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "pragmatist_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "pragmatist_2": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "pragmatist_3": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "pragmatist_4": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "pragmatist_5": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "sleeper_1": {
+            "attempts": 0,
+            "accepted": 0,
+            "rejections": [],
+            "nudges": 48,
+            "reveals": 50,
+            "timeouts_seen": 50,
+            "first_choice_kept": 0,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "sleeper_2": {
+            "attempts": 0,
+            "accepted": 0,
+            "rejections": [],
+            "nudges": 48,
+            "reveals": 50,
+            "timeouts_seen": 50,
+            "first_choice_kept": 0,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "ghost_1": {
+            "attempts": 47,
+            "accepted": 47,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 47,
+            "timeouts_seen": 0,
+            "first_choice_kept": 47,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 1,
+            "auth_failures": 0
+        },
+        "straggler_1": {
+            "attempts": 50,
+            "accepted": 0,
+            "rejections": {
+                "not_deciding": 50
+            },
+            "nudges": 48,
+            "reveals": 50,
+            "timeouts_seen": 50,
+            "first_choice_kept": 16,
+            "first_choice_lost": 34,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "speedster_1": {
+            "attempts": 50,
+            "accepted": 50,
+            "rejections": [],
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "award": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        },
+        "double_tapper_1": {
+            "attempts": 100,
+            "accepted": 50,
+            "rejections": {
+                "already_chosen": 50
+            },
+            "nudges": 0,
+            "reveals": 50,
+            "timeouts_seen": 0,
+            "first_choice_kept": 50,
+            "first_choice_lost": 0,
+            "cards": {
+                "archetype_reveal": 1,
+                "podium": 1
+            },
+            "reconnects": 0,
+            "auth_failures": 0
+        }
+    },
+    "assertions": [
+        {
+            "name": "archetype saint_1",
+            "ok": true,
+            "soft": false,
+            "detail": "saint"
+        },
+        {
+            "name": "archetype saint_2",
+            "ok": true,
+            "soft": false,
+            "detail": "saint"
+        },
+        {
+            "name": "archetype wall_1",
+            "ok": true,
+            "soft": false,
+            "detail": "wall"
+        },
+        {
+            "name": "archetype wall_2",
+            "ok": true,
+            "soft": false,
+            "detail": "wall"
+        },
+        {
+            "name": "archetype mirror_1",
+            "ok": true,
+            "soft": false,
+            "detail": "mirror"
+        },
+        {
+            "name": "archetype mirror_2",
+            "ok": true,
+            "soft": false,
+            "detail": "mirror"
+        },
+        {
+            "name": "archetype mirror_3",
+            "ok": true,
+            "soft": true,
+            "detail": "saint, wanted mirror (documented overlap)"
+        },
+        {
+            "name": "archetype mirror_4",
+            "ok": true,
+            "soft": false,
+            "detail": "mirror"
+        },
+        {
+            "name": "archetype grudge_1",
+            "ok": true,
+            "soft": false,
+            "detail": "grudge"
+        },
+        {
+            "name": "archetype grudge_2",
+            "ok": false,
+            "soft": false,
+            "detail": "saint, wanted grudge; share 1 match ? forgive  exploit  predict 1"
+        },
+        {
+            "name": "archetype diplomat_1",
+            "ok": true,
+            "soft": true,
+            "detail": "mirror, wanted diplomat (documented overlap)"
+        },
+        {
+            "name": "archetype diplomat_2",
+            "ok": true,
+            "soft": true,
+            "detail": "mirror, wanted diplomat (documented overlap)"
+        },
+        {
+            "name": "archetype backstabber_1",
+            "ok": true,
+            "soft": false,
+            "detail": "backstabber"
+        },
+        {
+            "name": "archetype backstabber_2",
+            "ok": true,
+            "soft": false,
+            "detail": "backstabber"
+        },
+        {
+            "name": "archetype opportunist_1",
+            "ok": true,
+            "soft": false,
+            "detail": "opportunist"
+        },
+        {
+            "name": "archetype opportunist_2",
+            "ok": true,
+            "soft": false,
+            "detail": "opportunist"
+        },
+        {
+            "name": "archetype opportunist_3",
+            "ok": true,
+            "soft": false,
+            "detail": "opportunist"
+        },
+        {
+            "name": "archetype wildcard_1",
+            "ok": true,
+            "soft": false,
+            "detail": "wildcard"
+        },
+        {
+            "name": "archetype wildcard_2",
+            "ok": true,
+            "soft": false,
+            "detail": "wildcard"
+        },
+        {
+            "name": "archetype pragmatist_1",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist"
+        },
+        {
+            "name": "archetype pragmatist_2",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist"
+        },
+        {
+            "name": "archetype pragmatist_3",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist"
+        },
+        {
+            "name": "archetype pragmatist_4",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist"
+        },
+        {
+            "name": "archetype pragmatist_5",
+            "ok": true,
+            "soft": true,
+            "detail": "diplomat, wanted pragmatist (documented overlap)"
+        },
+        {
+            "name": "archetype sleeper_1",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist (no promise)"
+        },
+        {
+            "name": "archetype sleeper_2",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist (no promise)"
+        },
+        {
+            "name": "archetype ghost_1",
+            "ok": true,
+            "soft": false,
+            "detail": "mirror"
+        },
+        {
+            "name": "archetype straggler_1",
+            "ok": true,
+            "soft": false,
+            "detail": "pragmatist (no promise)"
+        },
+        {
+            "name": "archetype speedster_1",
+            "ok": true,
+            "soft": false,
+            "detail": "mirror"
+        },
+        {
+            "name": "archetype double_tapper_1",
+            "ok": true,
+            "soft": false,
+            "detail": "mirror"
+        },
+        {
+            "name": "decisions saint_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions saint_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions wall_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions wall_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions mirror_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions mirror_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions mirror_3",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions mirror_4",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions grudge_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions grudge_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions diplomat_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions diplomat_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions backstabber_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions backstabber_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions opportunist_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions opportunist_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions opportunist_3",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions wildcard_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions wildcard_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions pragmatist_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions pragmatist_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions pragmatist_3",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions pragmatist_4",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions pragmatist_5",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions sleeper_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions sleeper_2",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions ghost_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions straggler_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions speedster_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "decisions double_tapper_1",
+            "ok": true,
+            "soft": false,
+            "detail": "50 of 50"
+        },
+        {
+            "name": "the machine",
+            "ok": true,
+            "soft": false,
+            "detail": "0 bots in an even room"
+        },
+        {
+            "name": "kindest shares 100%",
+            "ok": true,
+            "soft": false,
+            "detail": "grudge_2 at 1"
+        },
+        {
+            "name": "most ruthless is a wall",
+            "ok": true,
+            "soft": false,
+            "detail": "wall_2"
+        },
+        {
+            "name": "most forgiving forgave 100%",
+            "ok": true,
+            "soft": false,
+            "detail": "opportunist_1 at 1"
+        },
+        {
+            "name": "endgame assassin is a backstabber",
+            "ok": true,
+            "soft": false,
+            "detail": "backstabber_1"
+        },
+        {
+            "name": "cold blooded is an opportunist",
+            "ok": true,
+            "soft": false,
+            "detail": "opportunist_3"
+        },
+        {
+            "name": "unreadable is a wildcard",
+            "ok": true,
+            "soft": false,
+            "detail": "wildcard_1"
+        },
+        {
+            "name": "fastest thumb is the speedster",
+            "ok": true,
+            "soft": false,
+            "detail": "speedster_1 at 382 ms"
+        },
+        {
+            "name": "most_betrayed is not a sleeper",
+            "ok": true,
+            "soft": false,
+            "detail": "saint_1"
+        },
+        {
+            "name": "best_partner is not a sleeper",
+            "ok": true,
+            "soft": false,
+            "detail": "saint_1"
+        },
+        {
+            "name": "podium has three places",
+            "ok": true,
+            "soft": false,
+            "detail": "wall_2, opportunist_1, grudge_2"
+        },
+        {
+            "name": "sleeper_1 all timeouts",
+            "ok": true,
+            "soft": false,
+            "detail": "50 timeouts, 0 attempts"
+        },
+        {
+            "name": "sleeper_1 nudged",
+            "ok": true,
+            "soft": false,
+            "detail": "48 nudges"
+        },
+        {
+            "name": "sleeper_1 wins nothing",
+            "ok": true,
+            "soft": false,
+            "detail": ""
+        },
+        {
+            "name": "sleeper_2 all timeouts",
+            "ok": true,
+            "soft": false,
+            "detail": "50 timeouts, 0 attempts"
+        },
+        {
+            "name": "sleeper_2 nudged",
+            "ok": true,
+            "soft": false,
+            "detail": "48 nudges"
+        },
+        {
+            "name": "sleeper_2 wins nothing",
+            "ok": true,
+            "soft": false,
+            "detail": ""
+        },
+        {
+            "name": "ghost_1 reconnected",
+            "ok": true,
+            "soft": false,
+            "detail": "1 reconnects"
+        },
+        {
+            "name": "ghost_1 missed decisions are timeouts, nothing else",
+            "ok": true,
+            "soft": false,
+            "detail": "3 timeouts (expected 3), 47 accepted"
+        },
+        {
+            "name": "straggler_1 all rejected",
+            "ok": true,
+            "soft": false,
+            "detail": "50 attempts, 0 accepted, {\"not_deciding\":50}"
+        },
+        {
+            "name": "straggler_1 all timeouts",
+            "ok": true,
+            "soft": false,
+            "detail": "50 timeouts"
+        },
+        {
+            "name": "speedster_1 answers fast",
+            "ok": true,
+            "soft": false,
+            "detail": "382 ms"
+        },
+        {
+            "name": "double_tapper_1 second tap ignored",
+            "ok": true,
+            "soft": false,
+            "detail": "50 accepted, 50 rejected of 100 taps: {\"already_chosen\":50}"
+        },
+        {
+            "name": "double_tapper_1 first choice kept",
+            "ok": true,
+            "soft": false,
+            "detail": "50 kept, 0 lost"
+        }
+    ]
+}

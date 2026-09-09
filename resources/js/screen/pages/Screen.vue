@@ -28,6 +28,15 @@ const failure = ref(null);
 const feed = ref([]);
 let fixture = null;
 
+// The projector plays the room's sound. Browsers keep audio locked until a gesture, so
+// the first click anywhere on the page (the operator opening it) unlocks it.
+audio.use('screen');
+function unlock() {
+    if (!audio.enabled.value) audio.toggle();
+    audio.unlock();
+    syncMusic();
+}
+
 onMounted(async () => {
     const code = props.code.toUpperCase();
     if (route.query.fixture) {
@@ -72,8 +81,26 @@ watch(
     (status, was) => {
         if (status === 'pairing') feed.value = [];
         if (status === 'round_summary' && was !== 'round_summary') audio.cue('round_end');
+        syncMusic();
     },
 );
+
+// The music beds: a lobby loop, a round loop whose drums step up for decisions 8-10, a
+// warmer bed under the analysis. Paused rooms go quiet.
+function syncMusic() {
+    if (!audio.unlocked.value) return;
+    const s = store.state;
+    if (!s || s.paused) return audio.music(null);
+    if (s.status === 'lobby') return audio.music('lobby');
+    if (['pairing', 'deciding', 'revealing', 'round_summary'].includes(s.status)) {
+        audio.music('round');
+        audio.intensity(s.decision !== null && s.decision >= s.decisions_per_round - 2);
+        return;
+    }
+    if (s.status === 'analysis' || s.status === 'finished') return audio.music('analysis');
+    audio.music(null);
+}
+watch(() => [store.state?.decision, store.state?.paused], syncMusic);
 
 const view = computed(() => {
     switch (store.status) {
@@ -93,6 +120,16 @@ const view = computed(() => {
         <div v-if="loading" class="flex h-full items-center justify-center text-3xl text-slate-500">Loading…</div>
         <div v-else-if="failure" class="flex h-full items-center justify-center px-16 text-center text-4xl text-rose-200">{{ failure }}</div>
         <component :is="view" v-else :feed="feed" />
+
+        <button
+            v-if="!audio.unlocked.value && !loading && !failure"
+            type="button"
+            class="absolute inset-0 z-30 flex cursor-pointer items-end justify-center bg-transparent pb-10"
+            aria-label="Click once to enable sound"
+            @click="unlock"
+        >
+            <span class="sos-pulse rounded-full bg-slate-900/90 px-8 py-3 text-2xl text-slate-200 ring-1 ring-slate-600">🔊 Click anywhere once to enable sound</span>
+        </button>
 
         <div v-if="!store.isFixture && store.connection !== 'connected' && !loading && !failure" class="sos-pulse absolute right-6 top-6 rounded-full bg-amber-500/20 px-4 py-1.5 text-lg text-amber-200">reconnecting…</div>
         <div v-if="store.isFixture" class="absolute left-6 top-6 rounded-full bg-violet-500/20 px-3 py-1 text-sm text-violet-300">fixture</div>

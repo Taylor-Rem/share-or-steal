@@ -19,6 +19,7 @@ const code = ref('');
 const username = ref('');
 const error = ref(null);
 const busy = ref(false);
+audio.use('phone');
 
 onMounted(() => {
     code.value = String(route.query.code ?? recall('last_code') ?? '').toUpperCase();
