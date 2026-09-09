@@ -10,6 +10,7 @@
  *   node scripts/audio-pack.mjs phone      # one client
  */
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -61,7 +62,9 @@ for (const client of clients) {
     mkdirSync(outDir, { recursive: true });
     ffmpeg(['-i', merged, '-c:a', 'libopus', '-b:a', '96k', join(outDir, `${client}.webm`)]);
     ffmpeg(['-i', merged, '-c:a', 'libmp3lame', '-b:a', '128k', join(outDir, `${client}.mp3`)]);
-    writeFileSync(join(outDir, `${client}.json`), JSON.stringify({ src: [`/audio/${client}.webm`, `/audio/${client}.mp3`], sprite }, null, 2));
+    // Version the file URLs by content so a browser never pairs an old sheet with a new map.
+    const version = createHash('md5').update(readFileSync(join(outDir, `${client}.webm`))).digest('hex').slice(0, 8);
+    writeFileSync(join(outDir, `${client}.json`), JSON.stringify({ version, src: [`/audio/${client}.webm?v=${version}`, `/audio/${client}.mp3?v=${version}`], sprite }, null, 2));
 
     console.log(`${client}: ${parts.length} cues, ${t.toFixed(1)} s`);
     for (const p of parts) console.log(`   ${p.name.padEnd(16)} ${p.seconds.toFixed(2)} s${p.loop ? ' (loop)' : ''}`);

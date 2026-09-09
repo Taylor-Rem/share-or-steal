@@ -51,12 +51,12 @@
       "gain": 0
     },
     "music_lobby": {
-      "src": "freesound/lobby-happy-mouse-575481.mp3",
+      "src": "freesound/lobby-foolboy-347848.mp3",
       "loop": true,
       "gain": -2
     },
     "music_round": {
-      "src": "freesound/round-pulse-loop-544240.mp3",
+      "src": "freesound/round-69611-69611.mp3",
       "loop": true,
       "gain": -2
     },
@@ -66,7 +66,7 @@
       "gain": -4
     },
     "music_analysis": {
-      "src": "freesound/bed-solar-winds-580833.mp3",
+      "src": "freesound/analysis-sergequadrado-786249.mp3",
       "loop": true,
       "gain": -3
     }

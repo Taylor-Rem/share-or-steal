@@ -1,7 +1,8 @@
 {
+  "version": "9add4908",
   "src": [
-    "/audio/phone.webm",
-    "/audio/phone.mp3"
+    "/audio/phone.webm?v=9add4908",
+    "/audio/phone.mp3?v=9add4908"
   ],
   "sprite": {
     "join": [
