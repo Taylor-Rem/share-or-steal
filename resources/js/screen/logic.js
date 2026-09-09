@@ -3,11 +3,15 @@
  * how a name is clipped. No Vue, no GSAP, so Vitest can pin them down.
  */
 
-/** Append a reveal's moments to the feed, newest first, capped. Each gets a stable key. */
+/**
+ * Append a reveal's moments to the feed, newest reveal first, capped. The server already
+ * orders a reveal's moments rarest first (comeback, streak, betrayal, mutual steal), so
+ * that order is kept. Each item gets a stable key.
+ */
 export function pushMoments(feed, reveal, cap = 8) {
     if (!reveal?.moments?.length) return feed;
     const fresh = reveal.moments.map((m, i) => ({ ...m, key: `${reveal.round}-${reveal.decision}-${i}`, round: reveal.round, decision: reveal.decision }));
-    return [...fresh.reverse(), ...feed].slice(0, cap);
+    return [...fresh, ...feed].slice(0, cap);
 }
 
 /**
