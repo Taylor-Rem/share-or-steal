@@ -10,10 +10,10 @@ const store = useGameStore();
 
 // Something to do while the room fills: pick your look. Every tap is saved at once and
 // the chip on the big screen changes with it.
-const picking = ref(false);
-const saving = ref(false);
 const mine = computed(() => store.me?.avatar ?? null);
-const showPicker = computed(() => picking.value || !mine.value);
+const picking = ref(!mine.value); // open until "done"; the chip reopens it
+const saving = ref(false);
+const showPicker = computed(() => picking.value);
 async function pick(part, value) {
     const next = { emoji: mine.value?.emoji ?? AVATAR_EMOJI[0], color: mine.value?.color ?? AVATAR_COLORS[0], [part]: value };
     vibrate(BUZZ.tap);
@@ -45,7 +45,7 @@ const anonymous = computed(() => store.state?.mode === 'anonymous');
             <p class="mb-3 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400">
                 <span>{{ mine ? 'Change your look' : 'Pick your look while you wait' }}</span>
                 <span v-if="saving" class="text-emerald-300">saving…</span>
-                <button v-else-if="mine" type="button" class="text-slate-500" @click="picking = false">done</button>
+                <button v-else-if="mine" type="button" class="rounded-lg bg-slate-800 px-3 py-1 text-emerald-300" @click="picking = false">done</button>
             </p>
             <div class="grid grid-cols-8 gap-1.5" role="radiogroup" aria-label="Emoji">
                 <button
