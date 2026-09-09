@@ -28,7 +28,7 @@ Fetched as the high-quality MP3 previews through the Freesound API (`FREESOUND_A
 | screen:music_analysis | `freesound/analysis-sergequadrado-786249.mp3` | [Funky and Jazzy Gang Loop](https://freesound.org/people/SergeQuadrado/sounds/786249/) | SergeQuadrado | CC BY-NC 4.0 (attribution required, non-commercial use) |
 | screen:music_intense | `freesound/drums-gowers-202537.mp3` | [140 Bpm Amen Break Original (Processed)](https://freesound.org/people/gowers/sounds/202537/) | gowers | CC0 1.0 |
 
-The drum layer (`music_intense`) is the Amen break time-stretched from 140 to 172 BPM by the packer (`tempo` in the manifest), so it sits as double-time over the 86 BPM round loop.
+The drum layer (`music_intense`) is the Amen break time-stretched from 140 to 86 BPM by the packer (`tempo` in the manifest) and cut to exactly four bars, so it loops in step with the 86 BPM round loop.
 
 ## Kenney (CC0)
 
