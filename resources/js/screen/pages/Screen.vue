@@ -28,14 +28,15 @@ const failure = ref(null);
 const feed = ref([]);
 let fixture = null;
 
-// The projector plays the room's sound. Browsers keep audio locked until a gesture, so
-// the first click anywhere on the page (the operator opening it) unlocks it.
+// The projector always plays the room's sound. Browsers keep audio locked until a gesture,
+// so the first click anywhere on the page (the operator opening it) unlocks it, whether it
+// lands on the overlay or not; the music starts the moment that happens.
 audio.use('screen');
+if (!audio.enabled.value) audio.toggle();
 function unlock() {
-    if (!audio.enabled.value) audio.toggle();
     audio.unlock();
-    syncMusic();
 }
+watch(audio.unlocked, () => syncMusic());
 
 onMounted(async () => {
     const code = props.code.toUpperCase();

@@ -124,8 +124,9 @@ return [
         // Never shares again after a steal, and refuses the partner's olive branches too (a
         // mirror against a wall fails the second test: it was never offered one).
         'grudge' => ['post_steal_share_rate_max' => 0.10, 'olive_branch_share_rate_max' => 0.10],
-        // Diplomats copy about 90% of the time and pragmatists about 70%; the tournament winner is above both.
-        'mirror' => ['match_rate_min' => 0.90],
+        // Diplomats copy 91-98% of the time (they break the copy to forgive), pragmatists about 70%;
+        // the tournament winner copies almost always. Tuned on the simulator roster (Session 8).
+        'mirror' => ['match_rate_min' => 0.95],
         // Forgives, shares, and does not pounce on sharers (that is the opportunist).
         'diplomat' => ['forgiveness_min' => 0.60, 'share_rate_min' => 0.60, 'exploitation_rate_max' => 0.50],
         // A coin-flipper's steals land on sharers about as often as the room shares (~0.6), so 0.5 caught them.

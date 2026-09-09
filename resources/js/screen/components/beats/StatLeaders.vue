@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { gsap, dur } from '../../anim';
+import { from, gsap, dur } from '../../anim';
 import { reducedMotion } from '../../../shared/motion';
 import { clip } from '../../logic';
 
@@ -14,7 +14,7 @@ const visible = computed(() => leaders.value.slice(page.value * perPage, page.va
 const board = ref(null);
 let timer = null;
 
-const enter = () => board.value && gsap.from(board.value.children, { y: 40, opacity: 0, duration: dur(0.5), stagger: dur(0.12), ease: 'power3.out' });
+const enter = () => board.value && from(board.value.children, { y: 40, opacity: 0, duration: dur(0.5), stagger: dur(0.12), ease: 'power3.out' });
 onMounted(() => {
     enter();
     if (pages.value > 1) {
