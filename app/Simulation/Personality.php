@@ -5,12 +5,9 @@ namespace App\Simulation;
 use Random\Randomizer;
 
 /**
- * The scripted roster from docs/PLAN.md "Testing": every personality is a rule for the
- * next move given this round's history so far. Session 5 plays them into decision logs to
- * pin the archetype ladder down; Session 7's simulator plays them against the real server.
- *
- * `choose()` returns 'share', 'steal', or null for "does not answer" (a timeout).
- * `responseMs()` is how long the thumb takes when it does answer.
+ * The scripted roster from docs/PLAN.md "Testing", by name. Each case is one Strategy in
+ * App\Simulation\Personalities; this enum is the index the analysis tests and the
+ * simulator share. `choose()` here is the array-based convenience the tests use.
  */
 enum Personality: string
 {
@@ -36,36 +33,51 @@ enum Personality: string
         ['straggler', 1], ['speedster', 1], ['double_tapper', 1],
     ];
 
-    /**
-     * @param  list<array{me: string, them: string}>  $round  this round's revealed moves so far, from my seat
-     * @param  int  $index  the decision about to be made, 1-based
-     * @param  int  $roundNumber  1-based
-     */
-    public function choose(array $round, int $index, int $roundNumber, int $decisionsPerRound, Randomizer $rng): ?string
+    public function strategy(): Strategy
     {
-        $last = $round === [] ? null : $round[array_key_last($round)];
-        $theirs = array_column($round, 'them');
-        $mine = array_column($round, 'me');
-
         return match ($this) {
-            self::Saint => 'share',
-            self::Wall => 'steal',
-            self::Mirror, self::Speedster, self::DoubleTapper => $last ? $last['them'] : 'share',
-            self::Grudge => in_array('steal', $theirs, true) ? 'steal' : 'share',
-            // Mirror, but after one retaliation offers a share again.
-            self::Diplomat => $last === null ? 'share'
-                : ($last['them'] === 'share' ? 'share' : ($last['me'] === 'steal' ? 'share' : 'steal')),
-            self::Backstabber => $index >= $decisionsPerRound - 1 ? 'steal' : 'share',
-            self::Opportunist => $last && $last['them'] === 'share' ? 'steal' : 'share',
-            self::Wildcard => $rng->getInt(0, 1) ? 'share' : 'steal',
-            self::Pragmatist => (count($theirs) >= 2 && array_slice($theirs, -2) === ['steal', 'steal'])
-                ? 'steal' : ($rng->getFloat(0, 1) < 0.7 ? 'share' : 'steal'),
-            self::Sleeper, self::Straggler => null,
-            // Drops mid-round 3 and is back for the last few decisions.
-            self::Ghost => $roundNumber === 3 && $index >= 4 && $index <= 6 ? null : ($last ? $last['them'] : 'share'),
+            self::Saint => new Personalities\Saint,
+            self::Wall => new Personalities\Wall,
+            self::Mirror => new Personalities\Mirror,
+            self::Grudge => new Personalities\Grudge,
+            self::Diplomat => new Personalities\Diplomat,
+            self::Backstabber => new Personalities\Backstabber,
+            self::Opportunist => new Personalities\Opportunist,
+            self::Wildcard => new Personalities\Wildcard,
+            self::Pragmatist => new Personalities\Pragmatist,
+            self::Sleeper => new Personalities\Sleeper,
+            self::Ghost => new Personalities\Ghost,
+            self::Straggler => new Personalities\Straggler,
+            self::Speedster => new Personalities\Speedster,
+            self::DoubleTapper => new Personalities\DoubleTapper,
         };
     }
 
+    /**
+     * The move a scripted decision log records: null when the phone would not answer in
+     * time (never taps, taps after the window, or is offline), as the server would record it.
+     *
+     * @param  list<array{me: string, them: string}>  $round  this round's revealed moves so far, from my seat
+     * @param  int  $index  the decision about to be made, 1-based
+     */
+    public function choose(array $round, int $index, int $roundNumber, int $decisionsPerRound, Randomizer $rng): ?string
+    {
+        $strategy = $this->strategy();
+        $offline = $strategy->offline();
+        if ($offline !== null && $roundNumber === $offline[0] && $index >= $offline[1] && $index <= $offline[2]) {
+            return null;
+        }
+        $history = new History($round, $index, $roundNumber, $decisionsPerRound, $rng);
+        $chooseMs = (int) config('game.durations.normal.choose');
+        $delay = $strategy->tapDelayMs($history, $chooseMs);
+        if ($delay === null || $delay > $chooseMs) {
+            return null;
+        }
+
+        return $strategy->choose($history)?->value;
+    }
+
+    /** A plausible tap time for a scripted decision log. */
     public function responseMs(Randomizer $rng): int
     {
         return match ($this) {
@@ -76,17 +88,35 @@ enum Personality: string
 
     public function expectedArchetype(): ?string
     {
-        return match ($this) {
-            self::Saint => 'saint',
-            self::Wall => 'wall',
-            self::Mirror, self::Speedster, self::DoubleTapper, self::Ghost => 'mirror',
-            self::Grudge => 'grudge',
-            self::Diplomat => 'diplomat',
-            self::Backstabber => 'backstabber',
-            self::Opportunist => 'opportunist',
-            self::Wildcard => 'wildcard',
-            self::Pragmatist => 'pragmatist',
-            default => null,
-        };
+        return $this->strategy()->expectedArchetype();
+    }
+
+    /**
+     * The roster trimmed to `$count` players: Pragmatists go first, then the largest
+     * groups shrink, so every personality stays represented as long as it can.
+     *
+     * @return list<array{0: string, 1: int}>
+     */
+    public static function roster(int $count): array
+    {
+        $roster = self::ROSTER;
+        while (array_sum(array_column($roster, 1)) > $count) {
+            $kinds = array_column($roster, 0);
+            $counts = array_column($roster, 1);
+            $pragmatist = array_search('pragmatist', $kinds, true);
+            if ($pragmatist !== false && $counts[$pragmatist] > 1) {
+                $roster[$pragmatist][1]--;
+
+                continue;
+            }
+            $largest = array_search(max($counts), $counts, true);
+            if ($counts[$largest] > 1) {
+                $roster[$largest][1]--;
+            } else {
+                array_pop($roster);
+            }
+        }
+
+        return $roster;
     }
 }

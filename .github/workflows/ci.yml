@@ -42,3 +42,69 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+
+  simulate:
+    # The plan's thirty-player roster plays a whole fast-mode game against a real
+    # server, Reverb and the game clock, and every promise in the roster is checked.
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: share_or_steal
+          POSTGRES_USER: sos
+          POSTGRES_PASSWORD: sos
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U sos" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      APP_ENV: local
+      APP_URL: http://127.0.0.1:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: share_or_steal
+      DB_USERNAME: sos
+      DB_PASSWORD: sos
+      BROADCAST_CONNECTION: reverb
+      REVERB_APP_ID: 1
+      REVERB_APP_KEY: ci-key
+      REVERB_APP_SECRET: ci-secret
+      REVERB_HOST: 127.0.0.1
+      REVERB_PORT: 8080
+      REVERB_SCHEME: http
+      DIRECTOR_PASSWORD: ci-director
+      CACHE_STORE: array
+      SESSION_DRIVER: array
+      QUEUE_CONNECTION: sync
+      LOG_CHANNEL: stderr
+      PHP_CLI_SERVER_WORKERS: 8
+      GAME_FAST_CHOOSE_MS: 2000
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_pgsql, bcmath, intl
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: |
+          cp .env.example .env
+          php artisan key:generate --no-interaction
+          php artisan migrate --force
+      - name: Start Reverb, the clock and the app
+        run: |
+          php artisan reverb:start > reverb.log 2>&1 &
+          php artisan game:run > game.log 2>&1 &
+          php artisan serve --host=127.0.0.1 --port=8000 > serve.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8000/up > /dev/null && break; sleep 1; done
+      - run: php artisan game:simulate --fast --seed=1
+      - if: always()
+        run: tail -n 40 game.log reverb.log serve.log
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation
+          path: storage/simulations/*.json
+          if-no-files-found: ignore

@@ -39,8 +39,8 @@ return [
         ],
         'fast' => [
             'pairing_reveal' => 3_000,
-            'choose' => 1_000,
-            'reveal' => 1_000,
+            'choose' => (int) env('GAME_FAST_CHOOSE_MS', 1_000),   // CI widens this: a slow box needs more than 1 s to tap
+            'reveal' => (int) env('GAME_FAST_REVEAL_MS', 1_000),
             'round_summary' => 3_000,
         ],
     ],

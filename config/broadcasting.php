@@ -43,6 +43,10 @@ return [
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
+                // A publish that hangs would hang the game clock with it; fail fast instead.
+                // The engine's outbox reports a failed broadcast and sends the rest.
+                'connect_timeout' => 2,
+                'timeout' => 5,
             ],
         ],
 

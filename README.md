@@ -95,6 +95,22 @@ and exits non-zero if one is missing. Useful flags: `--players=9`, `--anonymous`
 `--rounds=2 --decisions=3`, `--slow` (game-day clocks), `--code=ABCD` to join an existing
 lobby, and `--url=`/`--ws=` for a deployed environment.
 
+The real thing is the simulator: the plan's roster of thirty scripted personalities, each a
+PHP WebSocket client, playing a whole game against a running server and checking every
+promise the roster makes (archetypes, awards, the sleeper's timeouts and nudges, the
+straggler's rejections, the double-tapper's first choice, the ghost's reconnect):
+
+```bash
+php artisan game:simulate --fast                     # 30 players, 1 s clocks, ~3 min
+php artisan game:simulate --fast --players=29        # an odd room: The Machine plays
+php artisan game:simulate --fast --anonymous --seed=7
+php artisan game:simulate --url=https://…laravel.cloud --ws=wss://…reverb.laravel.cloud:443 --key=… --director-key=…
+```
+
+It prints the full analysis and every check by name (`✓` passed, `~` landed inside a
+documented overlap of the archetype ladder, `✗` failed), exits non-zero on a failure, and
+saves the run's stats to `storage/simulations/<timestamp>_<code>.json` for threshold tuning.
+
 By hand, the same thing is: `POST /api/director/sessions` with `X-Director-Key`, a few
 `POST /api/sessions/{code}/join`, then `POST .../start`; `php artisan game:run` does the
 rest and prints each transition. See `CONTRACT.md` § 10 for every endpoint.
@@ -131,7 +147,7 @@ app/Enums/           SessionStatus, SessionMode, Choice, Archetype, AwardKey
 app/Events/          GameBroadcast base (envelope + state) and one class per CONTRACT.md § 9 event
 app/Game/            the engine: Engine (state machine, commands, broadcasts), Pairer, Moments, Payloads
 app/Analysis/        the analysis: DecisionLog -> Stats -> Ladder + Awards -> Beats (+ Comparison)
-app/Simulation/      Personality: the scripted roster the analysis is tested against and the simulator plays
+app/Simulation/      the roster (Personalities/, one class each), the simulator's clients, orchestrator and assertions
 app/Http/            join / me / choice and the director endpoints — CONTRACT.md § 10
 app/Console/         game:ping, game:run (the clock: one tick every game.tick_ms)
 resources/js/phone/  the player's phone: join page, one component per status, countdown ring
