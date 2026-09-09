@@ -23,10 +23,12 @@ Fetched as the high-quality MP3 previews through the Freesound API (`FREESOUND_A
 | screen:card | `freesound/riser-hit-754771.mp3` | [Riser Hit sfx 097](https://freesound.org/people/AudioPapkin/sounds/754771/) | AudioPapkin | CC0 1.0 |
 | screen:award | `freesound/drumroll-smooth-440829.mp3` | [Sting, rimshot, drum roll (smooth)](https://freesound.org/people/tlwmdbt/sounds/440829/) | tlwmdbt | CC0 1.0 |
 | screen:podium, phone:award | `freesound/tadaa-415504.mp3` | [Tadaa.wav](https://freesound.org/people/Exchanger/sounds/415504/) | Exchanger | CC0 1.0 |
-| screen:music_intense | `freesound/round-industrial-drums-849726.mp3` | [120 BPM Industrial Drum Loop #16197 (WAV)](https://freesound.org/people/looplicator/sounds/849726/) | looplicator | CC0 1.0 |
 | screen:music_lobby | `freesound/lobby-foolboy-347848.mp3` | [New York Jazz Loop](https://freesound.org/people/FoolBoyMedia/sounds/347848/) | FoolBoyMedia | CC BY-NC 4.0 (attribution required, non-commercial use) |
 | screen:music_round | `freesound/round-69611-69611.mp3` | [Mix0786BPM.wav](https://freesound.org/people/deleted_user_984625/sounds/69611/) | deleted_user_984625 | CC0 1.0 |
 | screen:music_analysis | `freesound/analysis-sergequadrado-786249.mp3` | [Funky and Jazzy Gang Loop](https://freesound.org/people/SergeQuadrado/sounds/786249/) | SergeQuadrado | CC BY-NC 4.0 (attribution required, non-commercial use) |
+| screen:music_intense | `freesound/drums-gowers-202537.mp3` | [140 Bpm Amen Break Original (Processed)](https://freesound.org/people/gowers/sounds/202537/) | gowers | CC0 1.0 |
+
+The drum layer (`music_intense`) is the Amen break time-stretched from 140 to 172 BPM by the packer (`tempo` in the manifest), so it sits as double-time over the 86 BPM round loop.
 
 ## Kenney (CC0)
 

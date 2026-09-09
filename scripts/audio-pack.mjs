@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Pack the audio sprite sheets from resources/audio/manifest.json with ffmpeg:
+ * Pack the audio sprite sheets from resources/audio/manifest.json with ffmpeg (a cue may
+ * carry `tempo` to time-stretch it, e.g. a 140 BPM break to 172 for an 86 BPM loop):
  * trim leading silence, cap each cue's length with a short fade, normalise loudness
  * (-16 LUFS effects, -20 LUFS music), lay every cue on one timeline with 300 ms of
  * silence between them, and write public/audio/{client}.webm + .mp3 + .json (the Howler
@@ -35,6 +36,7 @@ for (const client of clients) {
         const filters = [];
         if (!cue.loop) filters.push('silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.02');
         if (cue.start) filters.push(`atrim=start=${cue.start}`, 'asetpts=PTS-STARTPTS');
+        if (cue.tempo) filters.push(`atempo=${cue.tempo}`); // time-stretch without pitch change (0.5-2.0)
         if (cue.duration && !cue.loop) filters.push(`atrim=end=${cue.duration}`, `afade=t=out:st=${Math.max(0, cue.duration - 0.15)}:d=0.15`);
         filters.push(cue.loop ? 'loudnorm=I=-20:TP=-1.5:LRA=11' : 'loudnorm=I=-16:TP=-1.0:LRA=9');
         if (cue.gain) filters.push(`volume=${cue.gain}dB`);

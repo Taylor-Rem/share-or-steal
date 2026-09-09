@@ -120,10 +120,10 @@ export const useGameStore = defineStore('game', {
         },
 
         /** POST join. Resolves with the response body; rejects with { reason, message } (§ 10.2). */
-        async join({ code, username, deviceToken }) {
+        async join({ code, username, deviceToken, avatar = null }) {
             this.configure({ code, kind: 'phone', deviceToken });
             try {
-                const { data } = await this._api.post(`/sessions/${this.code}/join`, { username, device_token: deviceToken });
+                const { data } = await this._api.post(`/sessions/${this.code}/join`, { username, device_token: deviceToken, ...(avatar ? { avatar } : {}) });
                 this._clock.sync(data.server_time);
                 this.state = data.state;
                 this.me = data.player;

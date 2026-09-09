@@ -1,5 +1,5 @@
 {
-  "_comment": "One sprite sheet per client. Each cue: src (relative to resources/audio/source), optional start/duration seconds, gain dB, loop. scripts/audio-pack.mjs turns this into public/audio/{client}.{webm,mp3,json}.",
+  "_comment": "One sprite sheet per client. Each cue: src (relative to resources/audio/source), optional start/duration seconds, gain dB, loop, tempo (time-stretch factor). scripts/audio-pack.mjs turns this into public/audio/{client}.{webm,mp3,json}.",
   "screen": {
     "join": {
       "src": "freesound/pop-744144.mp3",
@@ -61,9 +61,10 @@
       "gain": -2
     },
     "music_intense": {
-      "src": "freesound/round-industrial-drums-849726.mp3",
+      "src": "freesound/drums-gowers-202537.mp3",
       "loop": true,
-      "gain": -4
+      "gain": -5,
+      "tempo": 1.228571
     },
     "music_analysis": {
       "src": "freesound/analysis-sergequadrado-786249.mp3",

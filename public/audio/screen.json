@@ -1,8 +1,8 @@
 {
-  "version": "3d88b2d3",
+  "version": "e034ef85",
   "src": [
-    "/audio/screen.webm?v=3d88b2d3",
-    "/audio/screen.mp3?v=3d88b2d3"
+    "/audio/screen.webm?v=e034ef85",
+    "/audio/screen.mp3?v=e034ef85"
   ],
   "sprite": {
     "join": [
@@ -61,11 +61,11 @@
     ],
     "music_intense": [
       98965,
-      16000,
+      5590,
       true
     ],
     "music_analysis": [
-      115265,
+      104855,
       29115,
       true
     ]
