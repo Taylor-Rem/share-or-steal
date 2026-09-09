@@ -131,19 +131,19 @@ class Engine
      *
      * @return array{session: GameSession, player: Player, created: bool}
      */
-    public function join(GameSession $session, string $username, string $deviceToken): array
+    public function join(GameSession $session, string $username, string $deviceToken, ?array $avatar = null): array
     {
         $player = null;
         $created = false;
 
-        $session = $this->transition($session, function (GameSession $s) use (&$player, &$created, $username, $deviceToken) {
+        $session = $this->transition($session, function (GameSession $s) use (&$player, &$created, $username, $deviceToken, $avatar) {
             if ($s->status === SessionStatus::Finished) {
                 throw GameException::conflict('session_finished', 'This game is over.');
             }
 
             $existing = $s->players()->where('device_token', $deviceToken)->first();
             if ($existing) {
-                $existing->forceFill(['last_seen_at' => now()])->save();
+                $existing->forceFill(['last_seen_at' => now()] + ($avatar ? ['avatar_emoji' => $avatar['emoji'], 'avatar_color' => $avatar['color']] : []))->save();
                 $player = $existing;
 
                 return;
@@ -160,6 +160,8 @@ class Engine
             $player = $s->players()->create([
                 'username' => $username,
                 'device_token' => $deviceToken,
+                'avatar_emoji' => $avatar['emoji'] ?? null,
+                'avatar_color' => $avatar['color'] ?? null,
                 'is_bot' => false,
                 'is_admitted' => $admitted,
                 'last_seen_at' => now(),

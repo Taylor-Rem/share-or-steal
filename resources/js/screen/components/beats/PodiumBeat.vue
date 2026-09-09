@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { timeline, dur } from '../../anim';
 import { useAudio } from '../../../shared/audio';
 import { clip } from '../../logic';
+import Avatar from '../../../shared/Avatar.vue';
 
 /** Beat: the podium. Three columns rise, third, second, then the champion. Anonymous: the distribution. */
 const props = defineProps({ payload: { type: Object, required: true }, anonymous: Boolean, still: Boolean });
@@ -44,8 +45,9 @@ onMounted(() => {
 
         <div v-else ref="columns" class="mt-8 grid w-full flex-1 grid-cols-3 items-end gap-10 px-24">
             <div v-for="p in places" :key="p.place" :data-place="p.place" class="flex flex-col justify-end rounded-t-[2.5rem] px-6 pb-8 pt-10 text-center" :class="p.place === 1 ? 'bg-amber-400/90 text-slate-950' : p.place === 2 ? 'bg-slate-300 text-slate-950' : 'bg-amber-800/80 text-amber-50'" :style="{ height: heights[p.place] }">
-                <div data-name>
-                    <p class="text-7xl font-black">{{ p.place }}</p>
+                <div data-name class="flex flex-col items-center">
+                    <Avatar :avatar="p.player.avatar" :name="p.player.username" :size="p.place === 1 ? 7 : 5.5" />
+                    <p class="mt-2 text-7xl font-black">{{ p.place }}</p>
                     <p class="mt-3 max-w-full truncate text-5xl font-black" :title="p.player.username">{{ clip(p.player.username, 16) }}</p>
                     <p class="mt-2 font-mono text-4xl font-bold">{{ p.total_points }} pts</p>
                     <p v-if="p.archetype" class="mt-2 text-2xl opacity-80">{{ p.archetype.label }}</p>

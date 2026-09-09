@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { timeline, dur } from '../../anim';
 import { useAudio } from '../../../shared/audio';
 import { clip, ordinal, pct } from '../../logic';
+import Avatar from '../../../shared/Avatar.vue';
 
 /** Beat: one player's archetype, as a card that flips over. Their phone gets the same card. */
 const props = defineProps({ payload: { type: Object, required: true }, anonymous: Boolean });
@@ -36,13 +37,14 @@ const stats = [
     <section class="flex h-full items-center justify-center" style="perspective: 2000px">
         <div ref="card" class="relative h-[34rem] w-[64rem]">
             <div ref="front" class="absolute inset-0 flex flex-col items-center justify-center rounded-[3rem] bg-slate-800 shadow-2xl" style="backface-visibility: hidden">
-                <p class="text-4xl uppercase tracking-[0.3em] text-slate-400">{{ ordinal(payload.rank) }} · {{ payload.total_points }} pts</p>
+                <Avatar :avatar="payload.player.avatar" :name="payload.player.username" :size="9" />
+                <p class="mt-6 text-4xl uppercase tracking-[0.3em] text-slate-400">{{ ordinal(payload.rank) }} · {{ payload.total_points }} pts</p>
                 <p class="mt-4 max-w-[56rem] truncate px-8 text-8xl font-black">{{ clip(payload.player.username, 22) }}</p>
                 <p class="mt-6 text-5xl text-slate-500">is…</p>
             </div>
             <div ref="back" class="absolute inset-0 grid grid-cols-[1.2fr_1fr] gap-8 rounded-[3rem] border border-emerald-400/40 bg-slate-900 p-12 shadow-2xl" style="backface-visibility: hidden; visibility: hidden">
                 <div class="flex flex-col justify-center">
-                    <p class="max-w-full truncate text-4xl font-semibold text-slate-300">{{ clip(payload.player.username, 22) }}</p>
+                    <p class="flex items-center gap-4 text-4xl font-semibold text-slate-300"><Avatar :avatar="payload.player.avatar" :name="payload.player.username" :size="3.5" /><span class="truncate">{{ clip(payload.player.username, 20) }}</span></p>
                     <p class="mt-2 text-8xl font-black text-emerald-300">{{ payload.archetype?.label ?? 'Unclassified' }}</p>
                     <p class="mt-4 text-3xl leading-snug text-slate-300">{{ payload.archetype?.blurb }}</p>
                 </div>
