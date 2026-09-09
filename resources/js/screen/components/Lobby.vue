@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import { useGameStore } from '../../shared/stores/game';
 import { from, dur } from '../anim';
 import { clip } from '../logic';
+import Avatar from '../../shared/Avatar.vue';
 
 const store = useGameStore();
 const joinUrl = computed(() => `${window.location.origin}/`);
@@ -56,7 +57,9 @@ watch(
                 Anonymous game.<br /><span class="text-2xl text-violet-300">No names on this screen. Partners appear as codenames.</span>
             </p>
             <ul v-else ref="list" class="flex max-h-full flex-wrap content-start gap-3 overflow-hidden">
-                <li v-for="p in store.players" :key="p.id" class="max-w-[16rem] truncate rounded-full bg-slate-800 px-6 py-3 text-3xl font-semibold" :title="p.username">{{ clip(p.username, 18) }}</li>
+                <li v-for="p in store.players" :key="p.id" class="flex max-w-[20rem] items-center gap-3 rounded-full bg-slate-800 py-2 pl-2 pr-6 text-3xl font-semibold" :title="p.username">
+                    <Avatar :avatar="p.avatar" :name="p.username" :size="3" /><span class="truncate">{{ clip(p.username, 16) }}</span>
+                </li>
             </ul>
         </section>
     </main>

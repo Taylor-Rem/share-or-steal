@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { clip, movementArrow } from '../logic';
+import Avatar from '../../shared/Avatar.vue';
 
 /**
  * A ranked list with movement arrows. Rows are positioned by rank and transition to their
@@ -26,6 +27,7 @@ const rows = computed(() => props.entries.slice(0, props.limit).map((e, i) => ({
             :style="{ top: e.top }"
         >
             <span class="w-10 text-right font-mono text-slate-500">{{ e.rank }}</span>
+            <Avatar :avatar="e.player.avatar" :name="e.player.username" :size="size === 'lg' ? 2.6 : 2.2" />
             <span class="min-w-0 flex-1 truncate font-semibold" :title="e.player.username">{{ clip(e.player.username, 16) }}<span v-if="e.player.is_bot" class="ml-2 rounded bg-slate-700 px-2 text-sm uppercase text-slate-300">bot</span></span>
             <span class="w-14 text-right font-mono text-lg" :class="e.movement > 0 ? 'text-emerald-300' : e.movement < 0 ? 'text-rose-300' : 'text-slate-600'">{{ movementArrow(e.movement) }}</span>
             <span class="w-20 text-right font-mono text-slate-400">+{{ e.round_points }}</span>
