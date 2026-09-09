@@ -81,17 +81,6 @@ return [
     ],
 
     /*
-    | Avatars: an emoji and a colour, picked on the join screen. The lists are the whole
-    | vocabulary; the server rejects anything else. Colour keys map to swatches in
-    | resources/js/shared/Avatar.vue.
-    */
-    'avatars' => [
-        'emoji' => ['🦊', '🐸', '🐙', '🦉', '🐝', '🦄', '🐢', '🐧', '🦁', '🐼', '🦋', '🐬', '🍕', '🌵', '🎸', '🚀', '⚡', '🍩', '🎲', '🧠', '🔥', '🌈', '🎯', '🥑'],
-        'colors' => ['rose', 'orange', 'amber', 'lime', 'emerald', 'sky', 'violet', 'pink'],
-        'bot' => ['emoji' => '🤖', 'color' => 'slate'],
-    ],
-
-    /*
     | Room codes and anonymous-mode codenames.
     */
     'code_length' => 4,

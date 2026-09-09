@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useGameStore } from '../../shared/stores/game';
 import SoundToggle from './SoundToggle.vue';
-import Avatar from '../../shared/Avatar.vue';
 
 const store = useGameStore();
 const reconnecting = computed(() => !store.isFixture && store.connection !== 'connected' && store.connection !== 'idle');
@@ -24,7 +23,7 @@ const where = computed(() => {
         <div class="flex items-center gap-3">
             <span v-if="reconnecting" class="sos-pulse rounded-full bg-amber-500/20 px-2 py-0.5 text-xs text-amber-300">reconnecting…</span>
             <span v-if="store.isFixture" class="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs text-violet-300">fixture</span>
-            <span v-if="store.me" class="flex items-center gap-1.5"><Avatar :avatar="store.me.avatar" :name="store.me.username" :size="1.6" /><span class="max-w-28 truncate">{{ store.me.username }}</span></span>
+            <span v-if="store.me" class="max-w-32 truncate">{{ store.me.username }}</span>
             <SoundToggle />
         </div>
     </header>

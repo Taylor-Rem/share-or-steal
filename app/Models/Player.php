@@ -67,22 +67,7 @@ class Player extends Model
             'id' => $this->id,
             'username' => $this->username,
             'is_bot' => $this->is_bot,
-            'avatar' => $this->avatar(),
         ];
-    }
-
-    /**
-     * The picked look, or The Machine's fixed one, or null.
-     *
-     * @return array{emoji: string, color: string}|null
-     */
-    public function avatar(): ?array
-    {
-        if ($this->is_bot) {
-            return config('game.avatars.bot');
-        }
-
-        return $this->avatar_emoji && $this->avatar_color ? ['emoji' => $this->avatar_emoji, 'color' => $this->avatar_color] : null;
     }
 
     /**
